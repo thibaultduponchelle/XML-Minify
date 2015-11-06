@@ -52,11 +52,15 @@ sub traverse($$) {
 		if($child->nodeType eq XML_TEXT_NODE) {
 			# Should be configurable (?)
 			# --keep-blanks
-			($child->data =~ /^\s*$/) or $outnode->appendText($child->data);
+			my $str = $child->data;
 
 			# Should be configurable 
 			# --remove-blanks-start : remove extra space/lf/cr at the start of the string
+			$str =~ s/^(\s|\R)*//g;
 			# --remove-blanks-end : remove extra space/lf/cr at the end of the string
+			$str =~ s/(\s|\R)*$//g;
+			($str =~ /^\s*$/) or $outnode->appendText($str);
+			#$outnode->appendText($str);
 		} elsif($child->nodeType eq XML_ENTITY_REF_NODE) {
 			# Configuration will be done above when creating document
 			my $er = $doc->createEntityReference($child->getName());
