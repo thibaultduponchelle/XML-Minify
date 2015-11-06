@@ -65,6 +65,10 @@ sub traverse($$) {
 			# Should be configurable 
 			# --keep-comments
 			$outnode->addChild($child);
+		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
+			# Should be configurable 
+			# --keep-cdata
+			$outnode->addChild($child);
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}
@@ -103,10 +107,6 @@ foreach my $flc ($tree->childNodes()) {
 		# DTD validation works like a charm of course... 
 		# But reading from one xml and set to another with experimental function seems just broken or works very weirdly
 
-	} elsif($flc->nodeType eq XML_CDATA_SECTION_NODE) {
-		# Should be configurable
-		# --keep-cdata
-		print $flc->toString();
 	} elsif($flc->nodeType eq XML_PI_NODE) {
 		# Should be configurable
 		# --keep-pi
@@ -121,6 +121,7 @@ foreach my $flc ($tree->childNodes()) {
 		# XML_TEXT_NODE
 		# XML_ENTITY_REF_NODE
 		# XML_COMMENT_NODE
+		# XML_CDATA_SECTION_NODE
 
 		# Ignore 
 		# XML_XINCLUDE_START
