@@ -19,6 +19,10 @@ GetOptions (
 	"keep-comments"   => \$opt_keep_comments,
 	"keep-cdata"   => \$opt_keep_cdatas,
 	"keep-pi"   => \$opt_keep_pi,
+	"keep-dtd"   => \$opt_keep_dtd,
+	"no-version"   => \$opt_no_version,
+	"version=s"   => \$opt_version,
+	"encoding=s"   => \$opt_encoding,
 	"agressive"   => \$opt_agressive,
 	"help"   => \$opt_help          
 	) or die("Error in command line arguments (maybe \"$0 --help\" could help ?)\n");
@@ -66,7 +70,7 @@ my $root = $tree->getDocumentElement;
 $XML::LibXML::skipXMLDeclaration = 1;
 my $doc = XML::LibXML::Document->new();#'1.0', 'UTF-8');
 
-# traverse the "main" tree ("main" means <root>...</root>)
+# Traverse the document
 sub traverse($$) {
         my $node = shift;
         my $outnode = shift;
@@ -133,7 +137,7 @@ foreach my $flc ($tree->childNodes()) {
 
 	if(($flc->nodeType eq XML_DTD_NODE) or ($flc->nodeType eq XML_DOCUMENT_TYPE_NODE)) { # second is synonym but deprecated
 		# Should be configurable
-		# --keep-dtd and even --keep-dtd-format
+		# --keep-dtd 
 		my $str = $flc->toString();
 		# alternative : my $internaldtd = $tree->internalSubset(); my $str = $internaldtd->toString();
 		$str =~ s/\R//g;
@@ -282,6 +286,14 @@ Options:
 
 --keep-pi                    keep processing instructions
 
+--keep-dtd                   keep dtd
+
+--no-version                 remove version 
+
+--version                    specify version for the xml
+
+--encoding                   specify encoding for the xml
+
 --agressive                  short alias for agressive mode 
 
 --help                       brief help message
@@ -292,7 +304,7 @@ Options:
 
 =item B<--expand-entities>
 
-Expand entities. AN entity is like &foo; 
+Expand entities. An entity is like &foo; 
 
 =item B<--remove-blanks-start>
 
@@ -328,6 +340,22 @@ Keep cdata, by default they are removed. A CDATA is like <![CDATA[ my cdata ]]>
 
 Keep processing instructions. A processing instruction is like <?xml-stylesheet href="style.css"/>
 
+=item B<--keep-dtd>
+
+Keep DTD.
+
+=item B<--no-version>
+
+Do not put any version.
+
+=item B<--version>
+
+Specify version.
+
+=item B<--encoding>
+
+Specify encoding.
+
 =item B<--agressive>
 
 Short alias for agressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text --remove-cr-lf-eveywhere if they are not defined only.
@@ -339,10 +367,28 @@ Print a brief help message and exits.
 
 =back
 
-=head1 DESCRIPTION
-B<This program> will read the standard output and minify it :
+=head2 DESCRIPTION
+
+B<This program> will read the standard input and minify
+
 =over 4
 
+Remove all useless formatting between nodes.
+Remove dtd (configurable).
+Remove processing instructions (configurable)
+Remove comments (configurable).
+Remove CDATA (configurable).
+
+This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
+If you want a full lossyless minification,  just use --keep arguments.
+
+In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+Remove empty text nodes (configurable).
+Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+Remove carriage returns and line feed into text node everywhere (configurable).
+
+=back
 
 =cut
 
