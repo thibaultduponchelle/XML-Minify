@@ -7,6 +7,45 @@
 use XML::LibXML; # To be installed from CPAN : sudo cpan -i XML::LibXML 
 # CPAN rules !
 
+use Pod::Usage qw(pod2usage);
+use Getopt::Long;
+
+GetOptions (
+	"expand-entities" => \$opt_expand_entities,
+	"remove-blanks-start"   => \$opt_remove_blanks_start,
+	"remove-blanks-end"   => \$opt_remove_blanks_end,
+	"remove-empty-text"   => \$opt_remove_empty_text,
+	"remove-cr-lf-everywhere"   => \$opt_remove_cr_lf_everywhere,
+	"keep-comments"   => \$opt_keep_comments,
+	"keep-cdata"   => \$opt_keep_cdatas,
+	"keep-pi"   => \$opt_keep_pi,
+	"agressive"   => \$opt_agressive,
+	"help"   => \$opt_help          
+	) or die("Error in command line arguments (maybe \"$0 --help\" could help ?)\n");
+
+if($opt_agressive) {
+	(defined $opt_remove_empty_text) or $opt_remove_empty_text = 1;             # a bit agressive
+	(defined $opt_remove_blanks_start) or $opt_remove_blanks_start = 1;         # agressive
+	(defined $opt_remove_blanks_end) or $opt_remove_blanks_end = 1;             # agressive
+	(defined $opt_remove_cr_lf_everywhere) or $opt_remove_cr_lf_everywhere = 1; # very agressive 
+	# Others are either overriden or with the correct value (undefined is false)
+}
+
+=comment
+print "expand-entities : " . $opt_expand_entities . "\n";
+print "remove-blanks-start : " . $opt_remove_blanks_start . "\n";
+print "remove-blanks-end : " . $opt_remove_blanks_end . "\n";
+print "remove-empty-text : " . $opt_remove_empty_text . "\n";
+print "remove-cr-lf-everywhere : " . $opt_remove_cr_lf_everywhere . "\n";
+print "keep-comments : " . $opt_keep_comments . "\n";
+print "keep-cdata : " . $opt_keep_cdatas . "\n";
+print "keep-pi : " . $opt_keep_pi . "\n";
+print "agressive : " . $opt_agressive . "\n";
+print "help : " . $opt_help . "\n";
+=cut
+
+($opt_help) and pod2usage(1);
+
 my $string;
 
 while (<>) {
@@ -58,6 +97,8 @@ sub traverse($$) {
 			# --remove-blanks-start : remove extra space/lf/cr at the start of the string
 			$str =~ s/^(\s|\R)*//g;
 			# --remove-blanks-end : remove extra space/lf/cr at the end of the string
+			$str =~ s/(\s|\R)*$//g;
+			# --remove-cr-lf-everywhere : remove extra space/lf/cr everywhere
 			$str =~ s/(\s|\R)*$//g;
 			($str =~ /^\s*$/) or $outnode->appendText($str);
 			#$outnode->appendText($str);
@@ -212,3 +253,97 @@ foreach my $flc ($tree->childNodes()) {
 $doc->setDocumentElement($rootnode);
 
 print $doc->toString();
+
+__END__
+
+=head1 NAME
+
+xml-minifier - Minify XML files
+
+=head1 SYNOPSIS
+
+xml-minifier 
+
+Options:
+
+--expand-entities            expand entities 
+
+--remove-blanks-start        remove blanks before text
+
+--remove-blanks-end          remove blanks after text
+
+--remove-empty-text          remove (pseudo) empty text
+
+--remove-cr-lf-everywhere    remove cr and lf everywhere
+
+--keep-comments              keep comments
+
+--keep-cdata                 keep cdata
+
+--keep-pi                    keep processing instructions
+
+--agressive                  short alias for agressive mode 
+
+--help                       brief help message
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<--expand-entities>
+
+Expand entities. AN entity is like &foo; 
+
+=item B<--remove-blanks-start>
+
+Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 
+For instance <tag>    foo bar</tag> will become <tag>foo bar</tag>
+Agressive and therefore lossy compression.
+
+=item B<--remove-blanks-end>
+
+Remove blanks (spaces, carriage return, line feed...) at the end of text nodes. 
+For instance <tag>foo bar    </tag> will become <tag>foo bar</tag>
+Agressive and therefore lossy compression.
+
+=item B<--remove-empty-text>
+
+Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
+Agressive and therefore lossy compression.
+
+=item B<--remove-cr-lf-everywhere>
+
+Remove carriage returns and line feed everywhere (inside text !). Very agressive and therefore lossy compression.
+
+=item B<--keep-comments>
+
+Keep comments, by default they are removed. A comment is like <!-- comment -->
+
+=item B<--keep-cdata>
+
+Keep cdata, by default they are removed. A CDATA is like <![CDATA[ my cdata ]]>
+
+=item B<--keep-pi>
+
+Keep processing instructions. A processing instruction is like <?xml-stylesheet href="style.css"/>
+
+=item B<--agressive>
+
+Short alias for agressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text --remove-cr-lf-eveywhere if they are not defined only.
+Other options still keep their value.
+
+=item B<--help>
+
+Print a brief help message and exits.
+
+=back
+
+=head1 DESCRIPTION
+B<This program> will read the standard output and minify it :
+=over 4
+
+
+=cut
+
+
