@@ -36,19 +36,6 @@ if($opt_agressive) {
 	# Others are either overriden or with the correct value (undefined is false)
 }
 
-=comment
-print "expand-entities : " . $opt_expand_entities . "\n";
-print "remove-blanks-start : " . $opt_remove_blanks_start . "\n";
-print "remove-blanks-end : " . $opt_remove_blanks_end . "\n";
-print "remove-empty-text : " . $opt_remove_empty_text . "\n";
-print "remove-cr-lf-everywhere : " . $opt_remove_cr_lf_everywhere . "\n";
-print "keep-comments : " . $opt_keep_comments . "\n";
-print "keep-cdata : " . $opt_keep_cdatas . "\n";
-print "keep-pi : " . $opt_keep_pi . "\n";
-print "agressive : " . $opt_agressive . "\n";
-print "help : " . $opt_help . "\n";
-=cut
-
 ($opt_help) and pod2usage(1);
 
 my $string;
@@ -69,6 +56,8 @@ my $root = $tree->getDocumentElement;
 # - I want to have full control on it
 $XML::LibXML::skipXMLDeclaration = 1;
 my $doc = XML::LibXML::Document->new();
+
+my %do_not_remove_blanks = ();
 
 # Traverse the document
 sub traverse($$) {
@@ -106,15 +95,21 @@ sub traverse($$) {
 			# Configurable with --remove-empty-text : remove text nodes that contains only space/lf/cr
 			$opt_remove_empty_text and $str =~ s/^\s*$//g;
 
-			# Let me explain, we could have text nodes basically everywhere (not sure if it always respect xml spec but... it happens :P)
-			# As we want to minify the xml, we can't just keep all blanks, because it is generally indentation or spaces that could be ignored
-			# If we have <name>   </name> we should keep it
-			# If we have </name>   </person> we should remove it (in this case parent node contains more than one child node : text node + element node)
-			# If we have <person>   <name> we should remove it (in this case parent node contains more than one child node : text node + element node)
-			# If we have </person>   <person> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			# Let me explain, we could have text nodes basically everywhere, and we don't know if whitespaces are ignorable or not. 
+			# As we want to minify the xml, we can't just keep all blanks, because it is generally indentation or spaces that could be ignored.
+			# Here is the strategy : 
+			# A. If we have <name>   </name> we should keep it anyway (unless forced with argument)
+			# B. If we have </name>   </person> we should remove (in this case parent node contains more than one child node : text node + element node)
+			# C. If we have <person>   <name> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			# D. If we have </person>   <person> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			# B, C, D : remove... unless explicitely declared in DTD as potential #PCDATA container
 			if( @{$child->parentNode->childNodes()} > 1 ) { 
 				# Should it be configurable ? 
-				$str =~ s/^\s*$//g;
+				if(!$do_not_remove_blanks{$child->parentNode->getName()}) {
+					# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
+				} else {
+					$str =~ s/^\s*$//g;
+				}
 			} 	 
 
 			$outnode->appendText($str);
@@ -143,6 +138,7 @@ $opt_no_prolog or print "<?xml version=\"$version\" encoding=\"$encoding\"?>";
 
 my $rootnode;
 
+
 # Parsing first level 
 foreach my $flc ($tree->childNodes()) {
 
@@ -157,14 +153,30 @@ foreach my $flc ($tree->childNodes()) {
 		# XML_ATTRIBUTE_DECL
 		# XML_ENTITY_DECL 
 		# XML_NOTATION_DECL
-		
+
+		# I need to manually (yuck) parse the node as XML::LibXML does not provide (wrap) such function
+		foreach my $dc ($flc->childNodes()) {
+			if($dc->nodeType == XML_ELEMENT_DECL) {
+				if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\((\s*#?\w+\s*\|)*\s*#PCDATA\s*(\|\s*#?\w+\s*)*\)\*?\s*>/) {
+					$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
+				}
+			}
+		}
+
+		# Some notes : 
+		# If I iterate over attributes of the childs of DTD (so ELEMENT, ATTLIST etc..) I get a segfault
+		# Probable bug from XML::LibXML similar to https://rt.cpan.org/Public/Bug/Display.html?id=71076
+
+		# If I try to access the content of XML_ENTITY_REF_DECL with getValue I get correct result, but on XML_ELEMENT_DECL I get empty string
+		# Seems like there's no function to play with DTD
+		# I guess we need to write the perl binding for xmlElementPtr xmlGetDtdElementDesc (xmlDtdPtr dtd, const xmlChar * name)
+
 		# If I try to iterate over childNodes, I never see XML_NOTATION_DECL (why?!)
-		# So I won't try to do that until I fully understand what to do or what's the problem
 
 		# One word about DTD and XML::LibXML : 
-		# It seems like something is wrong or partially implemented or I'm just stupid (probably :D)
 		# DTD validation works like a charm of course... 
 		# But reading from one xml and set to another with experimental function seems just broken or works very weirdly
+		# Segfault when reading big external subset, weird message "can't import dtd" when trying to add DTD...
 
 	} elsif($flc->nodeType eq XML_PI_NODE) {
 		# Configurable with --keep-pi
