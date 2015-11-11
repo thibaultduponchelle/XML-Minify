@@ -16,11 +16,12 @@ GetOptions (
 	"remove-blanks-end"   => \$opt_remove_blanks_end,
 	"remove-empty-text"   => \$opt_remove_empty_text,
 	"remove-cr-lf-everywhere"   => \$opt_remove_cr_lf_everywhere,
+	"remove-spaces-everywhere"   => \$opt_remove_spaces_everywhere,
 	"keep-comments"   => \$opt_keep_comments,
 	"keep-cdata"   => \$opt_keep_cdatas,
 	"keep-pi"   => \$opt_keep_pi,
 	"keep-dtd"   => \$opt_keep_dtd,
-	"no-version"   => \$opt_no_version,
+	"no-prolog"   => \$opt_no_prolog,
 	"version=s"   => \$opt_version,
 	"encoding=s"   => \$opt_encoding,
 	"agressive"   => \$opt_agressive,
@@ -56,9 +57,8 @@ while (<>) {
         $string .= $_;
 }
 
-# Should be configurable
-# --expand-entities
-my $parser = XML::LibXML->new(expand_entities => 0);
+# Configurable with --expand-entities
+my $parser = XML::LibXML->new(expand_entities => $opt_expand_entities);
 my $tree = $parser->parse_string($string);
 $parser->process_xincludes($tree);
 
@@ -68,16 +68,12 @@ my $root = $tree->getDocumentElement;
 # - It would be printed too late (after pi and subset) and produce broken output
 # - I want to have full control on it
 $XML::LibXML::skipXMLDeclaration = 1;
-my $doc = XML::LibXML::Document->new();#'1.0', 'UTF-8');
+my $doc = XML::LibXML::Document->new();
 
 # Traverse the document
 sub traverse($$) {
         my $node = shift;
         my $outnode = shift;
-
-        if(!$node) { # Useless I think
-                return; 
-        }
 
 	my $name = $node->getName();
 	$newnode = $doc->createElement($name);
@@ -93,31 +89,45 @@ sub traverse($$) {
 
         foreach my $child ($node->childNodes) {
 		if($child->nodeType eq XML_TEXT_NODE) {
-			# Should be configurable (?)
-			# --keep-blanks
 			my $str = $child->data;
+		        #print "Text node : $str (". $node->getName() . ") ". @{$child->parentNode->childNodes()} ."\n" ;
 
-			# Should be configurable 
-			# --remove-blanks-start : remove extra space/lf/cr at the start of the string
-			$str =~ s/^(\s|\R)*//g;
-			# --remove-blanks-end : remove extra space/lf/cr at the end of the string
-			$str =~ s/(\s|\R)*$//g;
-			# --remove-cr-lf-everywhere : remove extra space/lf/cr everywhere
-			$str =~ s/(\s|\R)*$//g;
-			($str =~ /^\s*$/) or $outnode->appendText($str);
-			#$outnode->appendText($str);
+			# All these substitutions aim to remove indentation that people tend to put in xml files...
+			# ...Or just clean on demand (default behavior keeps these blanks)
+
+			# Configurable with --remove-blanks-start : remove extra space/lf/cr at the start of the string
+			$opt_remove_blanks_start and $str =~ s/^\s*//g;
+			# Configurable with --remove-blanks-end : remove extra space/lf/cr at the end of the string
+			$opt_remove_blanks_end and $str =~ s/\s*$//g;
+			# Configurable with --remove-cr-lf-everywhere : remove extra lf/cr everywhere
+			$opt_remove_cr_lf_everywhere and $str =~ s/\R*//g;
+			# Configurable with --remove-spaces-everywhere : remove extra spaces everywhere
+			$opt_remove_spaces_everywhere and $str =~ s/ *//g;
+			# Configurable with --remove-empty-text : remove text nodes that contains only space/lf/cr
+			$opt_remove_empty_text and $str =~ s/^\s*$//g;
+
+			# Let me explain, we could have text nodes basically everywhere (not sure if it always respect xml spec but... it happens :P)
+			# As we want to minify the xml, we can't just keep all blanks, because it is generally indentation or spaces that could be ignored
+			# If we have <name>   </name> we should keep it
+			# If we have </name>   </person> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			# If we have <person>   <name> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			# If we have </person>   <person> we should remove it (in this case parent node contains more than one child node : text node + element node)
+			if( @{$child->parentNode->childNodes()} > 1 ) { 
+				# Should it be configurable ? 
+				$str =~ s/^\s*$//g;
+			} 	 
+
+			$outnode->appendText($str);
 		} elsif($child->nodeType eq XML_ENTITY_REF_NODE) {
 			# Configuration will be done above when creating document
 			my $er = $doc->createEntityReference($child->getName());
 			$outnode->addChild($er); 
 		} elsif($child->nodeType eq XML_COMMENT_NODE) {
-			# Should be configurable 
-			# --keep-comments
-			$outnode->addChild($child);
+			# Configurable with --keep-comments
+			$opt_keep_comments and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
-			# Should be configurable 
-			# --keep-cdata
-			$outnode->addChild($child);
+			# Configurable with --keep-cdata
+			$opt_keep_cdata and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}
@@ -125,10 +135,11 @@ sub traverse($$) {
 	return $outnode;
 }
 
-# Should be configurable
-# --no-version : do not put version (agressive for readers) 
+# Configurable with --no-prolog : do not put prolog (a bit gressive for readers) 
 # --version=1.0 --encoding=UTF-8 : choose values
-print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+$version = $opt_version || "1.0";
+$encoding = $opt_encoding || "UTF-8";
+$opt_no_prolog or print "<?xml version=\"$version\" encoding=\"$encoding\"?>";
 
 my $rootnode;
 
@@ -136,12 +147,11 @@ my $rootnode;
 foreach my $flc ($tree->childNodes()) {
 
 	if(($flc->nodeType eq XML_DTD_NODE) or ($flc->nodeType eq XML_DOCUMENT_TYPE_NODE)) { # second is synonym but deprecated
-		# Should be configurable
-		# --keep-dtd 
+		# Configurable with --keep-dtd 
 		my $str = $flc->toString();
 		# alternative : my $internaldtd = $tree->internalSubset(); my $str = $internaldtd->toString();
 		$str =~ s/\R//g;
-		print $str;
+		$opt_keep_dtd and print $str;
 	
 		# XML_ELEMENT_DECL
 		# XML_ATTRIBUTE_DECL
@@ -157,12 +167,11 @@ foreach my $flc ($tree->childNodes()) {
 		# But reading from one xml and set to another with experimental function seems just broken or works very weirdly
 
 	} elsif($flc->nodeType eq XML_PI_NODE) {
-		# Should be configurable
-		# --keep-pi
-		print $flc->toString();
+		# Configurable with --keep-pi
+		$opt_keep_pi and print $flc->toString();
 	} elsif($flc->nodeType eq XML_COMMENT_NODE) {
-		# Should be configurable
-		# --keep-comments
+		# Configurable with --keep-comments
+		$opt_keep_comments and print $flc->toString();
 	} elsif($flc->nodeType eq XML_ELEMENT_NODE) { # Actually document node as if we do getDocumentNode
 		# "main" tree, only one (parser is protecting us)
 		$rootnode = traverse($root, $doc);
@@ -288,7 +297,7 @@ Options:
 
 --keep-dtd                   keep dtd
 
---no-version                 remove version 
+--no-prolog                  remove prolog (version and encoding)
 
 --version                    specify version for the xml
 
