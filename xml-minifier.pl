@@ -157,7 +157,7 @@ foreach my $flc ($tree->childNodes()) {
 		# I need to manually (yuck) parse the node as XML::LibXML does not provide (wrap) such function
 		foreach my $dc ($flc->childNodes()) {
 			if($dc->nodeType == XML_ELEMENT_DECL) {
-				if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\((\s*#?\w+\s*\|)*\s*#PCDATA\s*(\|\s*#?\w+\s*)*\)\*?\s*>/) {
+				if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\)>/) {
 					$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
 				}
 			}
