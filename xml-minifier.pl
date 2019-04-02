@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+use strict;
+use warnings;
+
 # Project : XML-Minifier
 # Author : Thibault Duponchelle
 # xml-minifier.pl does what you expect from it ;)
@@ -9,6 +12,13 @@ use XML::LibXML; # To be installed from CPAN : sudo cpan -i XML::LibXML
 
 use Pod::Usage qw(pod2usage);
 use Getopt::Long;
+
+my ($opt_expand_entities, $opt_remove_blanks_start, $opt_remove_blanks_end);
+my ($opt_remove_empty_text, $opt_remove_cr_lf_everywhere, $opt_remove_spaces_everywhere);
+my ($opt_keep_comments, $opt_keep_cdatas, $opt_keep_pi, $opt_keep_dtd, $opt_no_prolog);
+my ($opt_version, $opt_encoding, $opt_agressive, $opt_help);
+sub traverse($$);
+
 
 GetOptions (
 	"expand-entities" => \$opt_expand_entities,
@@ -65,7 +75,7 @@ sub traverse($$) {
         my $outnode = shift;
 
 	my $name = $node->getName();
-	$newnode = $doc->createElement($name);
+	my $newnode = $doc->createElement($name);
 	if($outnode) {
 		$outnode->addChild($newnode);
 	}
@@ -122,7 +132,7 @@ sub traverse($$) {
 			$opt_keep_comments and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
 			# Configurable with --keep-cdata
-			$opt_keep_cdata and $outnode->addChild($child);
+			$opt_keep_cdatas and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}
@@ -132,8 +142,8 @@ sub traverse($$) {
 
 # Configurable with --no-prolog : do not put prolog (a bit gressive for readers) 
 # --version=1.0 --encoding=UTF-8 : choose values
-$version = $opt_version || "1.0";
-$encoding = $opt_encoding || "UTF-8";
+my $version = $opt_version || "1.0";
+my $encoding = $opt_encoding || "UTF-8";
 $opt_no_prolog or print "<?xml version=\"$version\" encoding=\"$encoding\"?>";
 
 my $rootnode;
