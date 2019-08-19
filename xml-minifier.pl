@@ -7,7 +7,7 @@ use warnings;
 # Author : Thibault Duponchelle
 # xml-minifier.pl does what you expect from it ;)
 
-use XML::LibXML; # To be installed from CPAN : sudo cpan -i XML::LibXML 
+use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML 
 # CPAN rules !
 
 use Pod::Usage qw(pod2usage);
