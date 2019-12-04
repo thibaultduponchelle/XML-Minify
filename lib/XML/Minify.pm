@@ -286,6 +286,21 @@ XML::Minify - It's a configurable XML minifier.
     my $xmlstr = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
     minify($xmlstr);
 
+Remove all useless formatting between nodes.
+Remove dtd (configurable).
+Remove processing instructions (configurable)
+Remove comments (configurable).
+Remove CDATA (configurable).
+
+This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
+If you want a full lossyless minification, just use keep arguments.
+
+In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+Remove empty text nodes (configurable).
+Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+Remove carriage returns and line feed into text node everywhere (configurable).
+
 =head2 OPTIONS
 
 You can give various options:
@@ -299,36 +314,56 @@ Expand entities. An entity is like &foo;
 =item B<remove_blanks_start>
 
 Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 
-For instance <tag>    foo bar</tag> will become <tag>foo bar</tag>
-Agressive and therefore lossy compression.
+For instance 
+    <tag>    foo bar</tag> 
+will become 
+    <tag>foo bar</tag>
+
+It is agressive and therefore lossy compression.
 
 =item B<remove_blanks_end>
 
 Remove blanks (spaces, carriage return, line feed...) at the end of text nodes. 
-For instance <tag>foo bar    </tag> will become <tag>foo bar</tag>
-Agressive and therefore lossy compression.
+For instance 
+    <tag>foo bar    </tag> 
+will become 
+    <tag>foo bar</tag>
+
+It is agressive and therefore lossy compression.
 
 =item B<remove_empty_text>
 
 Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
-For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
-Agressive and therefore lossy compression.
+For instance 
+    <tag>foo\nbar</tag> 
+will become 
+    <tag>foobar</tag>
+
+It is gressive and therefore lossy compression.
 
 =item B<remove_cr_lf_everywhere>
 
-Remove carriage returns and line feed everywhere (inside text !). Very agressive and therefore lossy compression.
+Remove carriage returns and line feed everywhere (inside text !). 
+
+Very agressive and therefore lossy compression.
 
 =item B<keep_comments>
 
-Keep comments, by default they are removed. A comment is like <!-- comment -->
+Keep comments, by default they are removed. 
+A comment is like 
+    <!-- comment -->
 
 =item B<keep_cdata>
 
-Keep cdata, by default they are removed. A CDATA is like <![CDATA[ my cdata ]]>
+Keep cdata, by default they are removed. 
+A CDATA is like 
+    <![CDATA[ my cdata ]]>
 
 =item B<keep_pi>
 
-Keep processing instructions. A processing instruction is like <?xml-stylesheet href="style.css"/>
+Keep processing instructions. 
+A processing instruction is like 
+    <?xml-stylesheet href="style.css"/>
 
 =item B<keep_dtd>
 
@@ -348,29 +383,12 @@ Specify encoding.
 
 =item B<agressive>
 
-Short alias for agressive mode. Enables options remove_blanks_starts remove_blanks_end remove_empty_text remove_cr_lf_eveywhere if they are not defined only.
+Short alias for agressive mode. 
+Enables options remove_blanks_starts remove_blanks_end remove_empty_text remove_cr_lf_eveywhere if they are not defined only.
+
 Other options still keep their value.
 
 =back 
-
-=over 4
-
-Remove all useless formatting between nodes.
-Remove dtd (configurable).
-Remove processing instructions (configurable)
-Remove comments (configurable).
-Remove CDATA (configurable).
-
-This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
-If you want a full lossyless minification, just use keep arguments.
-
-In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
-Remove empty text nodes (configurable).
-Remove starting blanks (carriage return, line feed, spaces...) (configurable).
-Remove ending blanks (carriage return, line feed, spaces...) (configurable).
-Remove carriage returns and line feed into text node everywhere (configurable).
-
-=back
 
 =head1 LICENSE
 
