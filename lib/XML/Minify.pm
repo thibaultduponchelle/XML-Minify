@@ -287,18 +287,29 @@ XML::Minify - It's a configurable XML minifier.
     minify($xmlstr);
 
 Remove all useless formatting between nodes.
+
 Remove dtd (configurable).
+
 Remove processing instructions (configurable)
+
 Remove comments (configurable).
+
 Remove CDATA (configurable).
 
+
 This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
+
 If you want a full lossyless minification, just use keep arguments.
 
+
 In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+
 Remove empty text nodes (configurable).
+
 Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+
 Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+
 Remove carriage returns and line feed into text node everywhere (configurable).
 
 =head2 OPTIONS
