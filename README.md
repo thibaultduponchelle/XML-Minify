@@ -1,3 +1,5 @@
+[![Kritika Analysis Status](https://kritika.io/users/thibaultduponchelle/repos/1478496827185108/heads/master/status.svg)](https://kritika.io/users/thibaultduponchelle/repos/1478496827185108/heads/master/)
+
 # xml-minifier
 **xml-minifier** is a simple tool to minify xml. 
 
