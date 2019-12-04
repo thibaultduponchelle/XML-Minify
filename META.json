@@ -1,0 +1,74 @@
+{
+   "abstract" : "It's a configurable XML minifier.",
+   "author" : [
+      "Thibault DUPONCHELLE <thibault.duponchelle@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Minilla/v3.1.7, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "XML-Minify",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples",
+         "author",
+         "builder"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build::Tiny" : "0.035"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::CPAN::Meta" : "0",
+            "Test::MinimumVersion::Fast" : "0.04",
+            "Test::PAUSE::Permissions" : "0.07",
+            "Test::Pod" : "1.41",
+            "Test::Spellunker" : "v0.2.7"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "XML::LibXML" : "0",
+            "perl" : "5.008001"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.98"
+         }
+      }
+   },
+   "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/thibaultduponchelle/xml-minifier/issues"
+      },
+      "homepage" : "https://github.com/thibaultduponchelle/xml-minifier",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/thibaultduponchelle/xml-minifier.git",
+         "web" : "https://github.com/thibaultduponchelle/xml-minifier"
+      }
+   },
+   "version" : "0.01",
+   "x_contributors" : [
+      "Thibault DUPONCHELLE <thibault.duponchelle@amadeus.com>",
+      "thibaultduponchelle <580360+thibaultduponchelle@users.noreply.github.com>"
+   ],
+   "x_serialization_backend" : "JSON::PP version 2.27400_02",
+   "x_static_install" : 1
+}

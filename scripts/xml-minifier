@@ -10,11 +10,6 @@ use Getopt::Long;
 
 my %opt = ();
 my $opt_help;
-#my ($opt_expand_entities, $opt_remove_blanks_start, $opt_remove_blanks_end);
-#my ($opt_remove_empty_text, $opt_remove_cr_lf_everywhere, $opt_remove_spaces_everywhere);
-#my ($opt_keep_comments, $opt_keep_cdatas, $opt_keep_pi, $opt_keep_dtd, $opt_no_prolog);
-#my ($opt_version, $opt_encoding, $opt_agressive, $opt_help);
-
 
 GetOptions (
 	"expand-entities" => \$opt{expand_entities},

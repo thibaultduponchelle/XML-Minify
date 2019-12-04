@@ -1,7 +1,9 @@
 package XML::Minify;
-
+use 5.008001;
 use strict;
 use warnings;
+
+our $VERSION = "0.01";
 
 use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML 
 # CPAN rules !
@@ -31,7 +33,7 @@ sub minify($%) {
 		# Others are either overriden or with the correct value (undefined is false)
 	}
 	
-	# Configurable with --expand-entities
+	# Configurable with expand_entities
 	$parser = XML::LibXML->new(expand_entities => $opt{expand_entities});
 	$tree = $parser->parse_string($string);
 	$parser->process_xincludes($tree);
@@ -44,8 +46,8 @@ sub minify($%) {
 	$XML::LibXML::skipXMLDeclaration = 1;
 	$doc = XML::LibXML::Document->new();
 
-	# Configurable with --no-prolog : do not put prolog (a bit gressive for readers) 
-	# --version=1.0 --encoding=UTF-8 : choose values
+	# Configurable with no_prolog : do not put prolog (a bit gressive for readers) 
+	# version=1.0 encoding=UTF-8 : choose values
 	my $version = $opt{version} || "1.0";
 	my $encoding = $opt{encoding} || "UTF-8";
 	$opt{no_prolog} or print "<?xml version=\"$version\" encoding=\"$encoding\"?>";
@@ -57,7 +59,7 @@ sub minify($%) {
 	foreach my $flc ($tree->childNodes()) {
 
 		if(($flc->nodeType eq XML_DTD_NODE) or ($flc->nodeType eq XML_DOCUMENT_TYPE_NODE)) { # second is synonym but deprecated
-			# Configurable with --keep-dtd 
+			# Configurable with keep_dtd 
 			my $str = $flc->toString();
 			# alternative : my $internaldtd = $tree->internalSubset(); my $str = $internaldtd->toString();
 			$str =~ s/\R//g;
@@ -93,10 +95,10 @@ sub minify($%) {
 			# Segfault when reading big external subset, weird message "can't import dtd" when trying to add DTD...
 
 		} elsif($flc->nodeType eq XML_PI_NODE) {
-			# Configurable with --keep-pi
+			# Configurable with keep_pi
 			$opt{keep_pi} and print $flc->toString();
 		} elsif($flc->nodeType eq XML_COMMENT_NODE) {
-			# Configurable with --keep-comments
+			# Configurable with keep_comments
 			$opt{keep_comments} and print $flc->toString();
 		} elsif($flc->nodeType eq XML_ELEMENT_NODE) { # Actually document node as if we do getDocumentNode
 			# "main" tree, only one (parser is protecting us)
@@ -220,15 +222,15 @@ sub traverse($$) {
 			# All these substitutions aim to remove indentation that people tend to put in xml files...
 			# ...Or just clean on demand (default behavior keeps these blanks)
 
-			# Configurable with --remove-blanks-start : remove extra space/lf/cr at the start of the string
+			# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
 			$opt{remove_blanks_start} and $str =~ s/^\s*//g;
-			# Configurable with --remove-blanks-end : remove extra space/lf/cr at the end of the string
+			# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
 			$opt{remove_blanks_end} and $str =~ s/\s*$//g;
-			# Configurable with --remove-cr-lf-everywhere : remove extra lf/cr everywhere
+			# Configurable with remove_cr_lf_everywhere : remove extra lf/cr everywhere
 			$opt{remove_cr_lf_everywhere} and $str =~ s/\R*//g;
-			# Configurable with --remove-spaces-everywhere : remove extra spaces everywhere
+			# Configurable with remove_spaces_everywhere : remove extra spaces everywhere
 			$opt{remove_spaces_everywhere} and $str =~ s/ *//g;
-			# Configurable with --remove-empty-text : remove text nodes that contains only space/lf/cr
+			# Configurable with remove_empty_text : remove text nodes that contains only space/lf/cr
 			$opt{remove_empty_text} and $str =~ s/^\s*$//g;
 
 			# Let me explain, we could have text nodes basically everywhere, and we don't know if whitespaces are ignorable or not. 
@@ -254,10 +256,10 @@ sub traverse($$) {
 			my $er = $doc->createEntityReference($child->getName());
 			$outnode->addChild($er); 
 		} elsif($child->nodeType eq XML_COMMENT_NODE) {
-			# Configurable with --keep-comments
+			# Configurable with keep_comments
 			$opt{keep_comments} and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
-			# Configurable with --keep-cdata
+			# Configurable with keep_cdata
 			$opt{keep_cdatas} and $outnode->addChild($child);
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
@@ -268,3 +270,118 @@ sub traverse($$) {
 
 
 1;
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+XML::Minify - It's a configurable XML minifier.
+
+=head1 SYNOPSIS
+
+    use XML::Minify qw(minify);
+
+    my $xmlstr = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+    minify($xmlstr);
+
+=head2 OPTIONS
+
+You can give various options:
+
+=over 4
+
+=item B<expand_entities>
+
+Expand entities. An entity is like &foo; 
+
+=item B<remove_blanks_start>
+
+Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 
+For instance <tag>    foo bar</tag> will become <tag>foo bar</tag>
+Agressive and therefore lossy compression.
+
+=item B<remove_blanks_end>
+
+Remove blanks (spaces, carriage return, line feed...) at the end of text nodes. 
+For instance <tag>foo bar    </tag> will become <tag>foo bar</tag>
+Agressive and therefore lossy compression.
+
+=item B<remove_empty_text>
+
+Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
+Agressive and therefore lossy compression.
+
+=item B<remove_cr_lf_everywhere>
+
+Remove carriage returns and line feed everywhere (inside text !). Very agressive and therefore lossy compression.
+
+=item B<keep_comments>
+
+Keep comments, by default they are removed. A comment is like <!-- comment -->
+
+=item B<keep_cdata>
+
+Keep cdata, by default they are removed. A CDATA is like <![CDATA[ my cdata ]]>
+
+=item B<keep_pi>
+
+Keep processing instructions. A processing instruction is like <?xml-stylesheet href="style.css"/>
+
+=item B<keep_dtd>
+
+Keep DTD.
+
+=item B<no_version>
+
+Do not put any version.
+
+=item B<version>
+
+Specify version.
+
+=item B<encoding>
+
+Specify encoding.
+
+=item B<agressive>
+
+Short alias for agressive mode. Enables options remove_blanks_starts remove_blanks_end remove_empty_text remove_cr_lf_eveywhere if they are not defined only.
+Other options still keep their value.
+
+=back 
+
+=over 4
+
+Remove all useless formatting between nodes.
+Remove dtd (configurable).
+Remove processing instructions (configurable)
+Remove comments (configurable).
+Remove CDATA (configurable).
+
+This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
+If you want a full lossyless minification, just use keep arguments.
+
+In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+Remove empty text nodes (configurable).
+Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+Remove carriage returns and line feed into text node everywhere (configurable).
+
+=back
+
+=head1 LICENSE
+
+Copyright (C) Thibault DUPONCHELLE.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+Thibault DUPONCHELLE E<lt>thibault.duponchelle@gmail.comE<gt>
+
+=cut
+
