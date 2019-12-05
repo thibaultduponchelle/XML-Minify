@@ -37,7 +37,7 @@ while (<>) {
         $string .= $_;
 }
 
-minify($string, %opt);
+print minify($string, %opt);
 
 __END__
 

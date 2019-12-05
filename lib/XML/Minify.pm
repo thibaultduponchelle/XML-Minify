@@ -18,6 +18,7 @@ my $doc;
 my $tree;
 my $root;
 my $parser;
+my $output = "";
 
 sub traverse($$);
 
@@ -50,7 +51,7 @@ sub minify($%) {
 	# version=1.0 encoding=UTF-8 : choose values
 	my $version = $opt{version} || "1.0";
 	my $encoding = $opt{encoding} || "UTF-8";
-	$opt{no_prolog} or print "<?xml version=\"$version\" encoding=\"$encoding\"?>";
+	$opt{no_prolog} or $output  .= "<?xml version=\"$version\" encoding=\"$encoding\"?>";
 
 	my $rootnode;
 
@@ -63,7 +64,7 @@ sub minify($%) {
 			my $str = $flc->toString();
 			# alternative : my $internaldtd = $tree->internalSubset(); my $str = $internaldtd->toString();
 			$str =~ s/\R//g;
-			$opt{keep_dtd} and print $str;
+			$opt{keep_dtd} and $output .= $str;
 		
 			# XML_ELEMENT_DECL
 			# XML_ATTRIBUTE_DECL
@@ -96,10 +97,10 @@ sub minify($%) {
 
 		} elsif($flc->nodeType eq XML_PI_NODE) {
 			# Configurable with keep_pi
-			$opt{keep_pi} and print $flc->toString();
+			$opt{keep_pi} and $output .= $flc->toString();
 		} elsif($flc->nodeType eq XML_COMMENT_NODE) {
 			# Configurable with keep_comments
-			$opt{keep_comments} and print $flc->toString();
+			$opt{keep_comments} and $output .= $flc->toString();
 		} elsif($flc->nodeType eq XML_ELEMENT_NODE) { # Actually document node as if we do getDocumentNode
 			# "main" tree, only one (parser is protecting us)
 			$rootnode = traverse($root, $doc);
@@ -193,8 +194,9 @@ sub minify($%) {
 
 	$doc->setDocumentElement($rootnode);
 
-	print $doc->toString();
+	$output .= $doc->toString();
 
+	return $output;
 }
 
 # Traverse the document
