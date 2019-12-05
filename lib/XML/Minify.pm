@@ -18,13 +18,16 @@ my $doc;
 my $tree;
 my $root;
 my $parser;
-my $output = "";
+my $output;
 
 sub traverse($$);
 
 sub minify($%) {
 	my $string = shift;
 	%opt = @_;
+
+	# Reinit output
+	$output = "";
 
 	if($opt{agressive}) {
 		(defined $opt{remove_empty_text}) or $opt{remove_empty_text} = 1;             # a bit agressive
