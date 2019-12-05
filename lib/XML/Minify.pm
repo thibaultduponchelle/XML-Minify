@@ -367,7 +367,7 @@ will become
 
     <tag>foobar</tag>
 
-It is gressive and therefore lossy compression.
+It is agressive and therefore lossy compression.
 
 =item B<remove_cr_lf_everywhere>
 
