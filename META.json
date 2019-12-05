@@ -1,7 +1,7 @@
 {
    "abstract" : "It's a configurable XML minifier.",
    "author" : [
-      "Thibault DUPONCHELLE <thibault.duponchelle@gmail.com>"
+      "Thibault DUPONCHELLE"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.1.7, CPAN::Meta::Converter version 2.150010",
@@ -67,7 +67,8 @@
    "version" : "0.01",
    "x_contributors" : [
       "Thibault DUPONCHELLE <thibault.duponchelle@amadeus.com>",
-      "thibaultduponchelle <580360+thibaultduponchelle@users.noreply.github.com>"
+      "thibaultduponchelle <580360+thibaultduponchelle@users.noreply.github.com>",
+      "thibaultduponchelle <thibault.duponchelle@gmail.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 2.27400_02",
    "x_static_install" : 1

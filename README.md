@@ -174,4 +174,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-Thibault DUPONCHELLE <thibault.duponchelle@gmail.com>
+Thibault DUPONCHELLE

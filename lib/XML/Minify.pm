@@ -453,7 +453,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-Thibault DUPONCHELLE E<lt>thibault.duponchelle@gmail.comE<gt>
+Thibault DUPONCHELLE
 
 =cut
 
