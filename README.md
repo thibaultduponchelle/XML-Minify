@@ -96,7 +96,7 @@ You can give various options:
     <tag>foobar</tag>
     ```
 
-    It is gressive and therefore lossy compression.
+    It is agressive and therefore lossy compression.
 
 - **remove\_cr\_lf\_everywhere**
 
@@ -117,8 +117,12 @@ You can give various options:
 - **keep\_cdata**
 
     Keep cdata, by default they are removed. 
-    A CDATA is like 
-        &lt;!\[CDATA\[ my cdata \]\]>
+
+    A CDATA is something like : 
+
+    ```perl
+    <![CDATA[ my cdata ]]>
+    ```
 
 - **keep\_pi**
 

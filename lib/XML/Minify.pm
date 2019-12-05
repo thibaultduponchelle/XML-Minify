@@ -386,7 +386,9 @@ A comment is something like :
 =item B<keep_cdata>
 
 Keep cdata, by default they are removed. 
-A CDATA is like 
+
+A CDATA is something like : 
+
     <![CDATA[ my cdata ]]>
 
 =item B<keep_pi>
