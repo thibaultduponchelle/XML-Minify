@@ -291,31 +291,46 @@ XML::Minify - It's a configurable XML minifier.
     my $xmlstr = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
     minify($xmlstr);
 
-Remove all useless formatting between nodes.
+=head2 DEFAULT MINIFICATION
 
-Remove dtd (configurable).
+The minifier has a predefined set of option enabled by default. 
 
-Remove processing instructions (configurable)
+They were decided by the author as relevant and you can disable individually with B<keep_> options.
 
-Remove comments (configurable).
+=over 4
 
-Remove CDATA (configurable).
+=item Merge elements when empty
 
+=item Remove DTD (configurable).
 
-This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
+=item Remove processing instructions (configurable)
 
-If you want a full lossyless minification, just use keep arguments.
+=item Remove comments (configurable).
 
+=item Remove CDATA (configurable).
 
-In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+=back
 
-Remove empty text nodes (configurable).
+This is the default and should be perceived as lossyless minification in term of semantic. 
 
-Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+It's not completely if you consider these things as data, but in this case you simply can't minify as you can't touch anything ;)
 
-Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+=head2 EXTRA MINIFICATION
 
-Remove carriage returns and line feed into text node everywhere (configurable).
+In addition, you could be B<agressive> and remove characters in the text nodes (sort of "cleaning") : 
+
+=over 4
+
+=item Remove empty text nodes (configurable).
+
+=item Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+
+=item Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+
+=item Remove carriage returns and line feed into text node everywhere (configurable).
+
+=back 
+
 
 =head2 OPTIONS
 
@@ -422,6 +437,7 @@ Specify encoding.
 =item B<agressive>
 
 Short alias for agressive mode. 
+
 Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only.
 
 Other options still keep their value.
