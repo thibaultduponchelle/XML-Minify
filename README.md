@@ -47,30 +47,54 @@ You can give various options:
 - **remove\_blanks\_start**
 
     Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 
+
     For instance 
-        &lt;tag>    foo bar&lt;/tag> 
+
+    ```
+    <tag>    foo bar</tag> 
+    ```
+
     will become 
-        &lt;tag>foo bar&lt;/tag>
+
+    ```
+    <tag>foo bar</tag>
+    ```
 
     It is agressive and therefore lossy compression.
 
 - **remove\_blanks\_end**
 
     Remove blanks (spaces, carriage return, line feed...) at the end of text nodes. 
+
     For instance 
-        &lt;tag>foo bar    &lt;/tag> 
+
+    ```
+    <tag>foo bar    </tag> 
+    ```
+
     will become 
-        &lt;tag>foo bar&lt;/tag>
+
+    ```
+    <tag>foo bar</tag>
+    ```
 
     It is agressive and therefore lossy compression.
 
 - **remove\_empty\_text**
 
     Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+
     For instance 
-        &lt;tag>foo\\nbar&lt;/tag> 
+
+    ```
+    <tag>foo\nbar</tag> 
+    ```
+
     will become 
-        &lt;tag>foobar&lt;/tag>
+
+    ```
+    <tag>foobar</tag>
+    ```
 
     It is gressive and therefore lossy compression.
 
@@ -83,8 +107,12 @@ You can give various options:
 - **keep\_comments**
 
     Keep comments, by default they are removed. 
-    A comment is like 
-        &lt;!-- comment -->
+
+    A comment is something like :
+
+    ```
+    <!-- comment -->
+    ```
 
 - **keep\_cdata**
 
@@ -95,16 +123,26 @@ You can give various options:
 - **keep\_pi**
 
     Keep processing instructions. 
-    A processing instruction is like 
-        &lt;?xml-stylesheet href="style.css"/>
+
+    A processing instruction is something like :
+
+    ```
+    <?xml-stylesheet href="style.css"/>
+    ```
 
 - **keep\_dtd**
 
     Keep DTD.
 
-- **no\_version**
+- **no\_prolog**
 
-    Do not put any version.
+    Do not put prolog (having no prolog is agressive for XML readers).
+
+    Prolog is at the start of the XML file and look like this :
+
+    ```
+    <?xml version="1.0" encoding="UTF-8"?>";
+    ```
 
 - **version**
 
@@ -117,7 +155,7 @@ You can give various options:
 - **agressive**
 
     Short alias for agressive mode. 
-    Enables options remove\_blanks\_starts remove\_blanks\_end remove\_empty\_text remove\_cr\_lf\_eveywhere if they are not defined only.
+    Enables options **remove\_blanks\_start**, **remove\_blanks\_end** **remove\_empty\_text** and **remove\_cr\_lf\_eveywhere** if they are not defined only.
 
     Other options still keep their value.
 

@@ -330,9 +330,13 @@ Expand entities. An entity is like &foo;
 =item B<remove_blanks_start>
 
 Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 
+
 For instance 
+
     <tag>    foo bar</tag> 
+
 will become 
+
     <tag>foo bar</tag>
 
 It is agressive and therefore lossy compression.
@@ -340,9 +344,13 @@ It is agressive and therefore lossy compression.
 =item B<remove_blanks_end>
 
 Remove blanks (spaces, carriage return, line feed...) at the end of text nodes. 
+
 For instance 
+
     <tag>foo bar    </tag> 
+
 will become 
+
     <tag>foo bar</tag>
 
 It is agressive and therefore lossy compression.
@@ -350,9 +358,13 @@ It is agressive and therefore lossy compression.
 =item B<remove_empty_text>
 
 Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+
 For instance 
+
     <tag>foo\nbar</tag> 
+
 will become 
+
     <tag>foobar</tag>
 
 It is gressive and therefore lossy compression.
@@ -366,7 +378,9 @@ Very agressive and therefore lossy compression.
 =item B<keep_comments>
 
 Keep comments, by default they are removed. 
-A comment is like 
+
+A comment is something like :
+
     <!-- comment -->
 
 =item B<keep_cdata>
@@ -378,16 +392,22 @@ A CDATA is like
 =item B<keep_pi>
 
 Keep processing instructions. 
-A processing instruction is like 
+
+A processing instruction is something like :
+
     <?xml-stylesheet href="style.css"/>
 
 =item B<keep_dtd>
 
 Keep DTD.
 
-=item B<no_version>
+=item B<no_prolog>
 
-Do not put any version.
+Do not put prolog (having no prolog is agressive for XML readers).
+
+Prolog is at the start of the XML file and look like this :
+
+    <?xml version="1.0" encoding="UTF-8"?>";
 
 =item B<version>
 
@@ -400,7 +420,7 @@ Specify encoding.
 =item B<agressive>
 
 Short alias for agressive mode. 
-Enables options remove_blanks_starts remove_blanks_end remove_empty_text remove_cr_lf_eveywhere if they are not defined only.
+Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only.
 
 Other options still keep their value.
 
