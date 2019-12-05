@@ -1,4 +1,4 @@
-[![Kritika Status](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+xml-minifier/heads/master/status.svg)](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+xml-minifier)
+[![Build Status](https://travis-ci.org/thibaultduponchelle/xml-minifier.svg?branch=master)](https://travis-ci.org/thibaultduponchelle/xml-minifier) [![Kritika Status](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+xml-minifier/heads/master/status.svg)](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+xml-minifier)
 # NAME
 
 XML::Minify - It's a configurable XML minifier.
