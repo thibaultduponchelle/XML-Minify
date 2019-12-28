@@ -55,13 +55,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/thibaultduponchelle/xml-minifier/issues"
+         "web" : "https://github.com/thibaultduponchelle/XML-Minify/issues"
       },
-      "homepage" : "https://github.com/thibaultduponchelle/xml-minifier",
+      "homepage" : "https://github.com/thibaultduponchelle/XML-Minify",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/thibaultduponchelle/xml-minifier.git",
-         "web" : "https://github.com/thibaultduponchelle/xml-minifier"
+         "url" : "git://github.com/thibaultduponchelle/XML-Minify.git",
+         "web" : "https://github.com/thibaultduponchelle/XML-Minify"
       }
    },
    "version" : "0.01",
