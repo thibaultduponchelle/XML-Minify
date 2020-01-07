@@ -28,7 +28,11 @@ is(minify($maxi, %opt), $mini, "Give entire hash like this : %opt" );
 $opt{encoding} = "UTF-16";
 is(minify($maxi, %opt), $mini16, "Give entire hash like this : %opt (multiple keys/values)" );
 is(minify($maxi, version => "42.0"), $mini, "Give hash like this : key => value" );
-is(minify($maxi, version => "42.0", encoding => "UTF-16"), $mini16, "Give hash like this : key => value (multiple keys/values)" );
+is(minify($maxi, version => "42.0", encoding => "UTF-16"), $mini16, "Give hash like this : key => value (multiple keys/values) (1)" );
+is(minify($maxi, encoding => "UTF-16", version => "42.0"), $mini16, "Give hash like this : key => value (multiple keys/values) (2 change order)" );
+is(minify($maxi, a => "", b => "", encoding => "UTF-16", version => "42.0"), $mini16, "Give exotic keys with empty content" );
+is(minify($maxi, "encoding", "UTF-16", "version", "42.0"), $mini16, "Give hash with non-fat comma" );
+is(minify($maxi, "", "", encoding => "UTF-16", version => "42.0"), $mini16, "Weird but will work" );
 
 done_testing;
 
