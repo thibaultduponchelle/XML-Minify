@@ -438,7 +438,7 @@ Specify encoding.
 
 Short alias for agressive mode. 
 
-Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only.
+Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only. Means you can use B<agressive> mode but disable one configuration like B<remove_cr_lf_everywhere> if you want.
 
 Other options still keep their value.
 
