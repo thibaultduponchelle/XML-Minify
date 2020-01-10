@@ -59,8 +59,6 @@ Bob
 Richard</name><level/></person>
 EOM
 
-
-
 chomp $mini;
 chomp $mininoblanks_start;
 chomp $mininoblanks_end;
