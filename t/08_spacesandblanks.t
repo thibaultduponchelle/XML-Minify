@@ -15,8 +15,6 @@ my $maxi = << "EOM";
   </name   
   >
   <level  >
-
-
 </level          >
 </person   >
 
@@ -33,8 +31,6 @@ Bob
 Richard
 </name>
 <level>
-
-
 </level>
 </person>
 EOM

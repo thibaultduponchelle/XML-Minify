@@ -228,9 +228,9 @@ sub traverse($$) {
 			# ...Or just clean on demand (default behavior keeps these blanks)
 
 			# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
-			$opt{remove_blanks_start} and $str =~ s/^\s*//g;
+			$opt{remove_blanks_start} and $str =~ s/\A\s*//g;
 			# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
-			$opt{remove_blanks_end} and $str =~ s/\s*$//g;
+			$opt{remove_blanks_end} and $str =~ s/\s*\Z//g;
 			# Configurable with remove_cr_lf_everywhere : remove extra lf/cr everywhere
 			$opt{remove_cr_lf_everywhere} and $str =~ s/\R*//g;
 			# Configurable with remove_spaces_everywhere : remove extra spaces everywhere
