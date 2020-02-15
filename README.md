@@ -43,7 +43,11 @@ You can give various options:
 
 - **expand\_entities**
 
-    Expand entities. An entity is like &amp;foo; 
+    Expand entities. An entity is like 
+
+    ```
+    &foo; 
+    ```
 
 - **remove\_blanks\_start**
 
@@ -81,14 +85,30 @@ You can give various options:
 
     It is agressive and therefore lossy compression.
 
+- **remove\_spaces\_line\_start**
+
+    Remove spaces and tabs at the start of each line in text nodes. 
+    It's like removing indentation actually.
+
+- **remove\_spaces\_line\_end**
+
+    Remove spaces and tabs at the end of each line in text nodes.
+    It's like removing invisible things.
+
 - **remove\_empty\_text**
 
     Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
 
+- **remove\_cr\_lf\_everywhere**
+
+    Remove carriage returns and line feed everywhere (inside text !). 
+
     For instance 
 
     ```
-    <tag>foo\nbar</tag> 
+    <tag>foo
+    bar
+    </tag> 
     ```
 
     will become 
@@ -98,12 +118,6 @@ You can give various options:
     ```
 
     It is agressive and therefore lossy compression.
-
-- **remove\_cr\_lf\_everywhere**
-
-    Remove carriage returns and line feed everywhere (inside text !). 
-
-    Very agressive and therefore lossy compression.
 
 - **keep\_comments**
 
@@ -161,7 +175,7 @@ You can give various options:
 
     Short alias for agressive mode. 
 
-    Enables options **remove\_blanks\_start**, **remove\_blanks\_end** **remove\_empty\_text** and **remove\_cr\_lf\_eveywhere** if they are not defined only.
+    Enables options **remove\_blanks\_start**, **remove\_blanks\_end** **remove\_empty\_text** and **remove\_cr\_lf\_eveywhere** if they are not defined only. Means you can use **agressive** mode but disable one configuration like **remove\_cr\_lf\_everywhere** if you want.
 
     Other options still keep their value.
 

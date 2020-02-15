@@ -356,7 +356,9 @@ You can give various options:
 
 =item B<expand_entities>
 
-Expand entities. An entity is like &foo; 
+Expand entities. An entity is like 
+    
+    &foo; 
 
 =item B<remove_blanks_start>
 
@@ -386,34 +388,35 @@ will become
 
 It is agressive and therefore lossy compression.
 
-
 =item B<remove_spaces_line_start>
 
-Remove spaces and tabs at the start of each line in text nodes.
+Remove spaces and tabs at the start of each line in text nodes. 
+It's like removing indentation actually.
 
 =item B<remove_spaces_line_end>
 
 Remove spaces and tabs at the end of each line in text nodes.
+It's like removing invisible things.
 
 =item B<remove_empty_text>
 
 Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
 
+=item B<remove_cr_lf_everywhere>
+
+Remove carriage returns and line feed everywhere (inside text !). 
+
 For instance 
 
-    <tag>foo\nbar</tag> 
+    <tag>foo
+    bar
+    </tag> 
 
 will become 
 
     <tag>foobar</tag>
 
 It is agressive and therefore lossy compression.
-
-=item B<remove_cr_lf_everywhere>
-
-Remove carriage returns and line feed everywhere (inside text !). 
-
-Very agressive and therefore lossy compression.
 
 =item B<keep_comments>
 
