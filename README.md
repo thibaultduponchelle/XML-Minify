@@ -76,7 +76,8 @@ You can give various options:
     For instance 
 
     ```
-    <tag>foo bar    </tag> 
+    <tag>foo bar    
+       </tag> 
     ```
 
     will become 

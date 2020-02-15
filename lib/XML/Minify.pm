@@ -384,7 +384,8 @@ Remove blanks (spaces, carriage return, line feed...) at the end of text nodes.
 
 For instance 
 
-    <tag>foo bar    </tag> 
+    <tag>foo bar    
+       </tag> 
 
 will become 
 
