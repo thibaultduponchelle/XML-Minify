@@ -404,7 +404,7 @@ It's like removing invisible things.
 
 =item B<remove_empty_text>
 
-Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+Remove (pseudo) empty text nodes (containing only spaces, carriage return, line feed...). 
 
 =item B<remove_cr_lf_everywhere>
 

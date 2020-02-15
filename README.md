@@ -99,7 +99,7 @@ You can give various options:
 
 - **remove\_empty\_text**
 
-    Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
+    Remove (pseudo) empty text nodes (containing only spaces, carriage return, line feed...). 
 
 - **remove\_cr\_lf\_everywhere**
 
