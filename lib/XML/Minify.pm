@@ -229,7 +229,7 @@ sub traverse($$) {
 
 
 			# Blanks are several things like spaces, tabs, lf, cr, vertical space...
-			
+
 			# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
 			$opt{remove_blanks_start} and $str =~ s/\A\s*//g;
 			# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
@@ -385,6 +385,15 @@ will become
     <tag>foo bar</tag>
 
 It is agressive and therefore lossy compression.
+
+
+=item B<remove_spaces_line_start>
+
+Remove spaces and tabs at the start of each line in text nodes.
+
+=item B<remove_spaces_line_end>
+
+Remove spaces and tabs at the end of each line in text nodes.
 
 =item B<remove_empty_text>
 
