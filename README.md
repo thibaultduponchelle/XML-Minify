@@ -36,6 +36,8 @@ In addition, you could be **agressive** and remove characters in the text nodes 
 - Remove starting blanks (carriage return, line feed, spaces...) (configurable).
 - Remove ending blanks (carriage return, line feed, spaces...) (configurable).
 - Remove carriage returns and line feed into text node everywhere (configurable).
+- Remove indentation in text nodes (configurable).
+- Remove invisible spaces and tabs at the end of line in text nodes (configurable).
 
 ## OPTIONS
 
