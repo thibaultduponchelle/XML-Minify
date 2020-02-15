@@ -398,6 +398,20 @@ It is agressive and therefore lossy compression.
 Remove spaces and tabs at the start of each line in text nodes. 
 It's like removing indentation actually.
 
+For instance 
+
+    <tag>
+           foo 
+           bar    
+       </tag> 
+
+will become 
+
+    <tag>
+    foo 
+    bar
+    </tag>
+
 =item B<remove_spaces_line_end>
 
 Remove spaces and tabs at the end of each line in text nodes.

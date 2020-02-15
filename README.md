@@ -93,6 +93,24 @@ You can give various options:
     Remove spaces and tabs at the start of each line in text nodes. 
     It's like removing indentation actually.
 
+    For instance 
+
+    ```
+    <tag>
+           foo 
+           bar    
+       </tag> 
+    ```
+
+    will become 
+
+    ```
+    <tag>
+    foo 
+    bar
+    </tag>
+    ```
+
 - **remove\_spaces\_line\_end**
 
     Remove spaces and tabs at the end of each line in text nodes.
