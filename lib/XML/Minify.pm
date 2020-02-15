@@ -345,9 +345,9 @@ In addition, you could be B<agressive> and remove characters in the text nodes (
 
 =item Remove carriage returns and line feed into text node everywhere (configurable).
 
-=item Remove indentation in text nodes (configurable).
+=item Remove indentation (configurable).
 
-=item Remove invisible spaces and tabs at the end of line in text nodes (configurable).
+=item Remove invisible spaces and tabs at the end of line (configurable).
 
 =back 
 
