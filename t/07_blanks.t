@@ -49,7 +49,5 @@ is(minify($maxi, no_prolog => 1, remove_blanks_start => 1), $mininoblanks_start,
 is(minify($maxi, no_prolog => 1, remove_blanks_end => 1), $mininoblanks_end, "Remove blanks at the end of text nodes (2 use remove_blanks_end)");
 is(minify($maxi, no_prolog => 1, remove_blanks_start => 1, remove_blanks_end => 1), $mininoblanks_both, "Remove blanks at start and end of text nodes (3 remove_blanks_start and remove_blanks_end)");
 
-ok(1);
-
 done_testing;
 

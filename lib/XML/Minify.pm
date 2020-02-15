@@ -227,16 +227,32 @@ sub traverse($$) {
 			# All these substitutions aim to remove indentation that people tend to put in xml files...
 			# ...Or just clean on demand (default behavior keeps these blanks)
 
+
+			# Blanks are several things like spaces, tabs, lf, cr, vertical space...
+			
 			# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
 			$opt{remove_blanks_start} and $str =~ s/\A\s*//g;
 			# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
 			$opt{remove_blanks_end} and $str =~ s/\s*\Z//g;
+
+
+			# Only CR and LF
+
 			# Configurable with remove_cr_lf_everywhere : remove extra lf/cr everywhere
 			$opt{remove_cr_lf_everywhere} and $str =~ s/\R*//g;
+
+
+			# Spaces are 2 things : space and tabs
+
+			# Configurable with remove_spaces_line_start : remove extra spaces or tabs at the start of each line
+			$opt{remove_spaces_line_start} and $str =~ s/^( |\t)*//mg;
+			# Configurable with remove_spaces_line_end : remove extra spaces or tabs at the end of each line
+			$opt{remove_spaces_line_end} and $str =~ s/( |\t)*$//mg;
 			# Configurable with remove_spaces_everywhere : remove extra spaces everywhere
-			$opt{remove_spaces_everywhere} and $str =~ s/ *//g;
+			$opt{remove_spaces_everywhere} and $str =~ s/( |\t)*//g;
+
 			# Configurable with remove_empty_text : remove text nodes that contains only space/lf/cr
-			$opt{remove_empty_text} and $str =~ s/^\s*$//g;
+			$opt{remove_empty_text} and $str =~ s/\A\s*\Z//g;
 
 			# Let me explain, we could have text nodes basically everywhere, and we don't know if whitespaces are ignorable or not. 
 			# As we want to minify the xml, we can't just keep all blanks, because it is generally indentation or spaces that could be ignored.

@@ -48,7 +48,5 @@ is(minify($maxi, no_prolog => 1, agressive => 1), $mini, "Agressive");
 is(minify($maxi, no_prolog => 1, agressive => 1, remove_cr_lf_everywhere => 0), $minikeepcrlf, "Agressive but keep CR LF (1)");
 is(minify($maxi, no_prolog => 1, remove_cr_lf_everywhere => 0, agressive => 1), $minikeepcrlf, "Agressive but keep CR LF (2 change order)");
 
-ok(1);
-
 done_testing;
 
