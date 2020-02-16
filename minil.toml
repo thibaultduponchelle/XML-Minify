@@ -1,5 +1,5 @@
 name = "XML-Minify"
-badges = ["travis-ci.org", "kritika"]
+badges = ["travis-ci.org", "github-actions/linux", "github-actions/macos", "github-actions/windows", "kritika"]
 module_maker="ModuleBuildTiny"
 static_install = "auto"
 #readme_from="lib/XML/Minify.pm"
