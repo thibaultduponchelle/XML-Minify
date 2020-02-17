@@ -340,9 +340,9 @@ XML::Minify - It's a configurable XML minifier.
 
 =head2 DEFAULT MINIFICATION
 
-The minifier has a predefined set of option enabled by default. 
+The minifier has a predefined set of options enabled by default. 
 
-They were decided by the author as relevant and you can disable individually with B<keep_> options.
+They were decided by the author as relevant but you can disable individually with B<keep_> options.
 
 =over 4
 

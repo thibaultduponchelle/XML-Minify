@@ -105,12 +105,12 @@ Agressive and therefore lossy compression.
 =item B<--remove-empty-text>
 
 Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
-For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
-Agressive and therefore lossy compression.
 
 =item B<--remove-cr-lf-everywhere>
 
-Remove carriage returns and line feed everywhere (inside text !). Very agressive and therefore lossy compression.
+Remove carriage returns and line feed everywhere (inside text !). 
+For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
+Very agressive and therefore lossy compression.
 
 =item B<--keep-comments>
 
@@ -175,5 +175,4 @@ Remove carriage returns and line feed into text node everywhere (configurable).
 =back
 
 =cut
-
 

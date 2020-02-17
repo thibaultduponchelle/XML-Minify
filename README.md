@@ -14,9 +14,9 @@ minify($xmlstr);
 
 ## DEFAULT MINIFICATION
 
-The minifier has a predefined set of option enabled by default. 
+The minifier has a predefined set of options enabled by default. 
 
-They were decided by the author as relevant and you can disable individually with **keep\_** options.
+They were decided by the author as relevant but you can disable individually with **keep\_** options.
 
 - Merge elements when empty
 - Remove DTD (configurable).
