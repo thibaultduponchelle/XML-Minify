@@ -215,18 +215,18 @@ You can give various options:
 
     Specify encoding.
 
-- **--aggressive**
+- **aggressive**
 
     Enable aggressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text if they are not defined only.
     Other options still keep their value.
 
-- **--destructive**
+- **destructive**
 
     Enable destructive mode. Enable options --remove-spaces-line-starts --remove-spaces-line-end if they are not defined only.
     Enable also aggressive mode.
     Other options still keep their value.
 
-- **--insane**
+- **insane**
 
     Enable insane mode. Enables options --remove-cr-lf-everywhere --remove-spaces-everywhere if they are not defined only.
     Enable also destructive mode and insane mode.
