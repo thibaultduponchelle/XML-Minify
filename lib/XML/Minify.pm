@@ -396,9 +396,9 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =over 4
 
-=item Remove carriage returns and line feed into text node everywhere (configurable).
+=item Remove carriage returns and line feed into text nodes everywhere (configurable).
 
-=item Remove spaces in text node everywhere (configurable).
+=item Remove spaces into text nodes everywhere (configurable).
 
 =back 
 
@@ -428,7 +428,7 @@ will become
 
     <tag>foo bar</tag>
 
-It is agressive and therefore lossy compression.
+It is aggressive and therefore lossy compression.
 
 =item B<remove_blanks_end>
 
@@ -443,9 +443,9 @@ will become
 
     <tag>foo bar</tag>
 
-It is agressive and therefore lossy compression.
+It is aggressive and therefore lossy compression.
 
-=item B<remove_spaces_line_start>
+=item B<remove_spaces_line_start> or B<remove_indent>
 
 Remove spaces and tabs at the start of each line in text nodes. 
 It's like removing indentation actually.
@@ -473,6 +473,16 @@ It's like removing invisible things.
 
 Remove (pseudo) empty text nodes (containing only spaces, carriage return, line feed...). 
 
+For instance 
+  
+    <tag>
+
+    </tag>
+
+will become 
+
+    <tag/>
+
 =item B<remove_cr_lf_everywhere>
 
 Remove carriage returns and line feed everywhere (inside text !). 
@@ -487,7 +497,7 @@ will become
 
     <tag>foobar</tag>
 
-It is agressive and therefore lossy compression.
+It is aggressive and therefore lossy compression.
 
 =item B<keep_comments>
 
@@ -519,7 +529,7 @@ Keep DTD.
 
 =item B<no_prolog>
 
-Do not put prolog (having no prolog is agressive for XML readers).
+Do not put prolog (having no prolog is aggressive for XML readers).
 
 Prolog is at the start of the XML file and look like this :
 
@@ -533,11 +543,11 @@ Specify version.
 
 Specify encoding.
 
-=item B<agressive>
+=item B<aggressive>
 
-Short alias for agressive mode. 
+Short alias for aggressive mode. 
 
-Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only. Means you can use B<agressive> mode but disable one configuration like B<remove_cr_lf_everywhere> if you want.
+Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only. Means you can use B<aggressive> mode but disable one configuration like B<remove_cr_lf_everywhere> if you want.
 
 Other options still keep their value.
 
