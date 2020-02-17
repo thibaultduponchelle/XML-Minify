@@ -392,7 +392,7 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =back 
 
-=head3 Destructive
+=head3 Insane
 
 =over 4
 
