@@ -214,7 +214,7 @@ B<This program> will read the standard input and minify
 This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
 If you want a full lossyless minification,  just use --keep arguments.
 
-In addition, you could be aggressive and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could be morte brutal and remove characters in the text nodes (sort of "cleaning") : 
 
 =over 4
 
