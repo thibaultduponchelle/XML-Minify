@@ -233,19 +233,3 @@ it under the same terms as Perl itself.
 # AUTHOR
 
 Thibault DUPONCHELLE
-
-# POD ERRORS
-
-Hey! **The above document had some coding errors, which are explained below:**
-
-- Around line 381:
-
-    &#x3d;back without =over
-
-- Around line 393:
-
-    &#x3d;back without =over
-
-- Around line 405:
-
-    &#x3d;back without =over

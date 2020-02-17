@@ -378,8 +378,6 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =back
 
-=back
-
 =head3 Destructive
 
 =over 4
@@ -390,8 +388,6 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =back 
 
-=back 
-
 =head3 Insane
 
 =over 4
@@ -399,8 +395,6 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 =item Remove carriage returns and line feed into text nodes everywhere.
 
 =item Remove spaces into text nodes everywhere.
-
-=back 
 
 =back 
 
