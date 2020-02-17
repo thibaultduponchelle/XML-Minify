@@ -56,8 +56,6 @@ OR
 
 cat file.xml | xml-minifier
 
-
-
 Options:
 
 --expand-entities            expand entities 
@@ -195,8 +193,7 @@ Print a brief help message and exits.
 
 =back
 
-=head2 DESCRIPTION
-
+=head1 DESCRIPTION
 
 B<This program> will read the standard input and minify
 
