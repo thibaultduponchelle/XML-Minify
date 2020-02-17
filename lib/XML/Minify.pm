@@ -370,11 +370,11 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =over 4
 
-=item Remove empty text nodes (configurable).
+=item Remove empty text nodes.
 
-=item Remove starting blanks (carriage return, line feed, spaces...) (configurable).
+=item Remove starting blanks (carriage return, line feed, spaces...).
 
-=item Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+=item Remove ending blanks (carriage return, line feed, spaces...).
 
 =back
 
@@ -384,9 +384,9 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =over 4
 
-=item Remove indentation (configurable).
+=item Remove indentation.
 
-=item Remove invisible spaces and tabs at the end of line (configurable).
+=item Remove invisible spaces and tabs at the end of line.
 
 =back 
 
@@ -396,9 +396,9 @@ In addition, you could be B<aggressive> and remove characters in the text nodes 
 
 =over 4
 
-=item Remove carriage returns and line feed into text nodes everywhere (configurable).
+=item Remove carriage returns and line feed into text nodes everywhere.
 
-=item Remove spaces into text nodes everywhere (configurable).
+=item Remove spaces into text nodes everywhere.
 
 =back 
 

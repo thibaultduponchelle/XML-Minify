@@ -34,19 +34,19 @@ In addition, you could be **aggressive** and remove characters in the text nodes
 
 ### Aggressive
 
-- Remove empty text nodes (configurable).
-- Remove starting blanks (carriage return, line feed, spaces...) (configurable).
-- Remove ending blanks (carriage return, line feed, spaces...) (configurable).
+- Remove empty text nodes.
+- Remove starting blanks (carriage return, line feed, spaces...).
+- Remove ending blanks (carriage return, line feed, spaces...).
 
 ### Destructive
 
-- Remove indentation (configurable).
-- Remove invisible spaces and tabs at the end of line (configurable).
+- Remove indentation.
+- Remove invisible spaces and tabs at the end of line.
 
 ### Insane
 
-- Remove carriage returns and line feed into text node everywhere (configurable).
-- Remove spaces in text node everywhere (configurable).
+- Remove carriage returns and line feed into text nodes everywhere.
+- Remove spaces into text nodes everywhere.
 
 ## OPTIONS
 
@@ -76,7 +76,7 @@ You can give various options:
     <tag>foo bar</tag>
     ```
 
-    It is agressive and therefore lossy compression.
+    It is aggressive and therefore lossy compression.
 
 - **remove\_blanks\_end**
 
@@ -95,9 +95,9 @@ You can give various options:
     <tag>foo bar</tag>
     ```
 
-    It is agressive and therefore lossy compression.
+    It is aggressive and therefore lossy compression.
 
-- **remove\_spaces\_line\_start**
+- **remove\_spaces\_line\_start** or **remove\_indent**
 
     Remove spaces and tabs at the start of each line in text nodes. 
     It's like removing indentation actually.
@@ -129,6 +129,20 @@ You can give various options:
 
     Remove (pseudo) empty text nodes (containing only spaces, carriage return, line feed...). 
 
+    For instance 
+
+    ```
+    <tag>
+
+    </tag>
+    ```
+
+    will become 
+
+    ```
+    <tag/>
+    ```
+
 - **remove\_cr\_lf\_everywhere**
 
     Remove carriage returns and line feed everywhere (inside text !). 
@@ -147,7 +161,7 @@ You can give various options:
     <tag>foobar</tag>
     ```
 
-    It is agressive and therefore lossy compression.
+    It is aggressive and therefore lossy compression.
 
 - **keep\_comments**
 
@@ -185,7 +199,7 @@ You can give various options:
 
 - **no\_prolog**
 
-    Do not put prolog (having no prolog is agressive for XML readers).
+    Do not put prolog (having no prolog is aggressive for XML readers).
 
     Prolog is at the start of the XML file and look like this :
 
@@ -201,11 +215,11 @@ You can give various options:
 
     Specify encoding.
 
-- **agressive**
+- **aggressive**
 
-    Short alias for agressive mode. 
+    Short alias for aggressive mode. 
 
-    Enables options **remove\_blanks\_start**, **remove\_blanks\_end** **remove\_empty\_text** and **remove\_cr\_lf\_eveywhere** if they are not defined only. Means you can use **agressive** mode but disable one configuration like **remove\_cr\_lf\_everywhere** if you want.
+    Enables options **remove\_blanks\_start**, **remove\_blanks\_end** **remove\_empty\_text** and **remove\_cr\_lf\_eveywhere** if they are not defined only. Means you can use **aggressive** mode but disable one configuration like **remove\_cr\_lf\_everywhere** if you want.
 
     Other options still keep their value.
 

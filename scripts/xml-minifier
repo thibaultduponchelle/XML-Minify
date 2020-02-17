@@ -50,7 +50,13 @@ xml-minifier - Minify XML files
 
 =head1 SYNOPSIS
 
-xml-minifier 
+xml-minifier file.xml 
+
+OR 
+
+cat file.xml | xml-minifier
+
+
 
 Options:
 
@@ -60,11 +66,11 @@ Options:
 
 --remove-blanks-end          remove blanks after text
 
---remove-spaces-line-start   remove spaces and tabs before text (each line)
+--remove-spaces-line-start   remove spaces/tabs before text (each line)
 
---remove-spaces-line-end     remove spaces and tabs after text (each line)
+--remove-spaces-line-end     remove spaces/tabs after text (each line)
 
---remove-indent              remove spaces and tabs before text (each line
+--remove-indent              remove spaces/tabs before text (each line
 
 --remove-empty-text          remove (pseudo) empty text
 
@@ -191,24 +197,43 @@ Print a brief help message and exits.
 
 =head2 DESCRIPTION
 
+
 B<This program> will read the standard input and minify
 
 =over 4
 
-Remove all useless formatting between nodes.
-Remove dtd (configurable).
-Remove processing instructions (configurable)
-Remove comments (configurable).
-Remove CDATA (configurable).
+=item Remove all useless formatting between nodes.
+
+=item Remove dtd.
+
+=item Remove processing instructions
+
+=item Remove comments.
+
+=item Remove CDATA.
+
+=back
 
 This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
 If you want a full lossyless minification,  just use --keep arguments.
 
 In addition, you could be aggressive and remove characters in the text nodes (sort of "cleaning") : 
-Remove empty text nodes (configurable).
-Remove starting blanks (carriage return, line feed, spaces...) (configurable).
-Remove ending blanks (carriage return, line feed, spaces...) (configurable).
-Remove carriage returns and line feed into text node everywhere (configurable).
+
+=over 4
+
+=item Remove empty text nodes.
+
+=item Remove starting blanks (carriage return, line feed, spaces...).
+
+=item Remove ending blanks (carriage return, line feed, spaces...).
+
+=item Remove carriage returns and line feed into text node everywhere.
+
+=item Remove spaces text node everywhere.
+
+=item Remove indentation in text node.
+
+=item Remove invisible spaces in text node.
 
 =back
 
