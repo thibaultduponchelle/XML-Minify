@@ -30,14 +30,23 @@ It's not completely if you consider these things as data, but in this case you s
 
 ## EXTRA MINIFICATION
 
-In addition, you could be **agressive** and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could be **aggressive** and remove characters in the text nodes (sort of "cleaning") : 
+
+### Aggressive
 
 - Remove empty text nodes (configurable).
 - Remove starting blanks (carriage return, line feed, spaces...) (configurable).
 - Remove ending blanks (carriage return, line feed, spaces...) (configurable).
-- Remove carriage returns and line feed into text node everywhere (configurable).
+
+### Destructive
+
 - Remove indentation (configurable).
 - Remove invisible spaces and tabs at the end of line (configurable).
+
+### Destructive
+
+- Remove carriage returns and line feed into text node everywhere (configurable).
+- Remove spaces in text node everywhere (configurable).
 
 ## OPTIONS
 
@@ -210,3 +219,19 @@ it under the same terms as Perl itself.
 # AUTHOR
 
 Thibault DUPONCHELLE
+
+# POD ERRORS
+
+Hey! **The above document had some coding errors, which are explained below:**
+
+- Around line 381:
+
+    &#x3d;back without =over
+
+- Around line 393:
+
+    &#x3d;back without =over
+
+- Around line 405:
+
+    &#x3d;back without =over

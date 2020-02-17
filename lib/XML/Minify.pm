@@ -364,7 +364,9 @@ It's not completely if you consider these things as data, but in this case you s
 
 =head2 EXTRA MINIFICATION
 
-In addition, you could be B<agressive> and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could be B<aggressive> and remove characters in the text nodes (sort of "cleaning") : 
+
+=head3 Aggressive
 
 =over 4
 
@@ -374,7 +376,13 @@ In addition, you could be B<agressive> and remove characters in the text nodes (
 
 =item Remove ending blanks (carriage return, line feed, spaces...) (configurable).
 
-=item Remove carriage returns and line feed into text node everywhere (configurable).
+=back
+
+=back
+
+=head3 Destructive
+
+=over 4
 
 =item Remove indentation (configurable).
 
@@ -382,6 +390,19 @@ In addition, you could be B<agressive> and remove characters in the text nodes (
 
 =back 
 
+=back 
+
+=head3 Destructive
+
+=over 4
+
+=item Remove carriage returns and line feed into text node everywhere (configurable).
+
+=item Remove spaces in text node everywhere (configurable).
+
+=back 
+
+=back 
 
 =head2 OPTIONS
 
