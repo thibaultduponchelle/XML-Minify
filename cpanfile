@@ -1,4 +1,4 @@
-requires 'perl', '5.001000';
+requires 'perl', '5.010000';
 requires 'XML::LibXML';
 
 on 'test' => sub {
