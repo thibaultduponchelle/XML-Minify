@@ -28,7 +28,7 @@ GetOptions (
 	"no-prolog"   => \$opt{no_prolog},
 	"version=s"   => \$opt{version},
 	"encoding=s"   => \$opt{encoding},
-	"agressive"   => \$opt{agressive},
+	"aggressive"   => \$opt{aggressive},
 	"help"   => \$opt_help          
 	) or die("Error in command line arguments (maybe \"$0 --help\" could help ?)\n");
 
@@ -60,6 +60,12 @@ Options:
 
 --remove-blanks-end          remove blanks after text
 
+--remove-spaces-line-start   remove spaces and tabs before text (each line)
+
+--remove-spaces-line-end     remove spaces and tabs after text (each line)
+
+--remove-indent              remove spaces and tabs before text (each line
+
 --remove-empty-text          remove (pseudo) empty text
 
 --remove-cr-lf-everywhere    remove cr and lf everywhere
@@ -78,7 +84,11 @@ Options:
 
 --encoding                   specify encoding for the xml
 
---agressive                  short alias for agressive mode 
+--aggressive                 enable aggressive mode 
+
+--destructive                enable aggressive mode 
+
+--insane                     enable aggressive mode 
 
 --help                       brief help message
 
@@ -102,6 +112,22 @@ Remove blanks (spaces, carriage return, line feed...) at the end of text nodes.
 For instance <tag>foo bar    </tag> will become <tag>foo bar</tag>
 Agressive and therefore lossy compression.
 
+=item B<--remove-spaces-line-start>
+
+Remove spaces and tabs at the start of each line of text nodes. 
+Agressive and therefore lossy compression.
+
+=item B<--remove-spaces-line-end>
+
+Remove spaces and tabs at the end of each line of text nodes. 
+Agressive and therefore lossy compression.
+
+=item B<--remove-indent>
+
+Remove spaces and tabs at the start of each line of text nodes. 
+It is actually an alias of B<--remove-spaces-line-start>
+Agressive and therefore lossy compression.
+
 =item B<--remove-empty-text>
 
 Remove (pseudo) empty text nodes (spaces, carriage return, line feed...). 
@@ -110,7 +136,7 @@ Remove (pseudo) empty text nodes (spaces, carriage return, line feed...).
 
 Remove carriage returns and line feed everywhere (inside text !). 
 For instance <tag>foo\nbar</tag> will become <tag>foobar</tag>
-Very agressive and therefore lossy compression.
+Very aggressive and therefore lossy compression.
 
 =item B<--keep-comments>
 
@@ -140,9 +166,21 @@ Specify version.
 
 Specify encoding.
 
-=item B<--agressive>
+=item B<--aggressive>
 
-Short alias for agressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text --remove-cr-lf-eveywhere if they are not defined only.
+Enable aggressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text if they are not defined only.
+Other options still keep their value.
+
+=item B<--destructive>
+
+Enable destructive mode. Enable options --remove-spaces-line-starts --remove-spaces-line-end if they are not defined only.
+Enable also aggressive mode.
+Other options still keep their value.
+
+=item B<--insane>
+
+Enable insane mode. Enables options --remove-cr-lf-everywhere --remove-spaces-everywhere if they are not defined only.
+Enable also destructive mode and insane mode.
 Other options still keep their value.
 
 =item B<--help>
@@ -166,7 +204,7 @@ Remove CDATA (configurable).
 This is the default and should be perceived as lossyless minification in term of semantic (but it's not completely if you consider these things as data).
 If you want a full lossyless minification,  just use --keep arguments.
 
-In addition, you could be agressive and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could be aggressive and remove characters in the text nodes (sort of "cleaning") : 
 Remove empty text nodes (configurable).
 Remove starting blanks (carriage return, line feed, spaces...) (configurable).
 Remove ending blanks (carriage return, line feed, spaces...) (configurable).
