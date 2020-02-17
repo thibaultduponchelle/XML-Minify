@@ -29,12 +29,43 @@ sub minify($%) {
 	# Reinit output
 	$output = "";
 
+	# remove_indent is an alias
+	if($opt{remove_indent}) {
+		$opt{remove_spaces_line_start} = 1;
+	}
+
+	# Accept "aggressive" and "agressive" (for people making typos... like me :D)
 	if($opt{agressive}) {
-		(defined $opt{remove_empty_text}) or $opt{remove_empty_text} = 1;             # a bit agressive
-		(defined $opt{remove_blanks_start}) or $opt{remove_blanks_start} = 1;         # agressive
-		(defined $opt{remove_blanks_end}) or $opt{remove_blanks_end} = 1;             # agressive
-		(defined $opt{remove_cr_lf_everywhere}) or $opt{remove_cr_lf_everywhere} = 1; # very agressive 
-		# Others are either overriden or with the correct value (undefined is false)
+		$opt{aggressive} = 1;
+	}
+
+	# Insane is more than destructive (and aggressive) 
+	if($opt{insane}) {
+		$opt{destructive} = 1;
+	}
+
+	# Destructive is more than aggressive
+	if($opt{destructive}) {
+		$opt{aggressive} = 1;
+	}
+
+	# Aggressive but relatively soft 
+	if($opt{aggressive}) {
+		(defined $opt{remove_empty_text}) or $opt{remove_empty_text} = 1;             # a bit aggressive
+		(defined $opt{remove_blanks_start}) or $opt{remove_blanks_start} = 1;         # aggressive
+		(defined $opt{remove_blanks_end}) or $opt{remove_blanks_end} = 1;             # aggressive
+	}
+
+	# Remove indent and pseudo invisible characters 
+	if($opt{destructive}) {
+		(defined $opt{remove_spaces_line_start}) or $opt{remove_spaces_line_start} = 1;         # very aggressive
+		(defined $opt{remove_spaces_line_end}) or $opt{remove_spaces_line_end} = 1;             # very aggressive
+	}
+
+	# Densify text nodes but clearly change your data  
+	if($opt{insane}) {
+		(defined $opt{remove_spaces_everywhere}) or $opt{remove_spaces_everywhere} = 1;         # very very aggressive
+		(defined $opt{remove_cr_lf_everywhere}) or $opt{remove_cr_lf_everywhere} = 1;           # very very aggressive 
 	}
 	
 	# Configurable with expand_entities
