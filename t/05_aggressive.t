@@ -45,7 +45,7 @@ EOM
 chomp $mini;
 chomp $minikeepblanksend;
 
-# Agressive mode (despite being lossy compression) is what I'm proud of because it removes what humans generally consider as extra sugar
+# Aggressive mode (despite being lossy compression) is what I'm proud of because it removes what humans generally consider as extra sugar
 is(minify($maxi, no_prolog => 1, aggressive => 1), $mini, "Aggressive");
 
 is(minify($maxi, no_prolog => 1, aggressive => 1, remove_blanks_end => 0), $minikeepblanksend, "Aggressive but keep CR LF (1)");
