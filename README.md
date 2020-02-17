@@ -43,7 +43,7 @@ In addition, you could be **aggressive** and remove characters in the text nodes
 - Remove indentation (configurable).
 - Remove invisible spaces and tabs at the end of line (configurable).
 
-### Destructive
+### Insane
 
 - Remove carriage returns and line feed into text node everywhere (configurable).
 - Remove spaces in text node everywhere (configurable).
