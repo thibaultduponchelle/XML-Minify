@@ -364,7 +364,7 @@ It's not completely if you consider these things as data, but in this case you s
 
 =head2 EXTRA MINIFICATION
 
-In addition, you could be B<aggressive> and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could be B<brutal> and remove characters in the text nodes (sort of "cleaning") : 
 
 =head3 Aggressive
 
@@ -537,12 +537,21 @@ Specify version.
 
 Specify encoding.
 
-=item B<aggressive>
+=item B<--aggressive>
 
-Short alias for aggressive mode. 
+Enable aggressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text if they are not defined only.
+Other options still keep their value.
 
-Enables options B<remove_blanks_start>, B<remove_blanks_end> B<remove_empty_text> and B<remove_cr_lf_eveywhere> if they are not defined only. Means you can use B<aggressive> mode but disable one configuration like B<remove_cr_lf_everywhere> if you want.
+=item B<--destructive>
 
+Enable destructive mode. Enable options --remove-spaces-line-starts --remove-spaces-line-end if they are not defined only.
+Enable also aggressive mode.
+Other options still keep their value.
+
+=item B<--insane>
+
+Enable insane mode. Enables options --remove-cr-lf-everywhere --remove-spaces-everywhere if they are not defined only.
+Enable also destructive mode and insane mode.
 Other options still keep their value.
 
 =back 
