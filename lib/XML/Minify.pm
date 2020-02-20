@@ -83,6 +83,7 @@ sub minify($%) {
 
 	# Configurable with no_prolog : do not put prolog (a bit aggressive for readers) 
 	# version=1.0 encoding=UTF-8 : choose values
+        # TODO : standalone ?
 	my $version = $opt{version} // "1.0";
 	my $encoding = $opt{encoding} // "UTF-8";
 	$opt{no_prolog} or $output  .= "<?xml version=\"$version\" encoding=\"$encoding\"?>";
