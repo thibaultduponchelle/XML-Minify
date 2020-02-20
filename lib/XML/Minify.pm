@@ -81,7 +81,7 @@ sub minify($%) {
 	$XML::LibXML::skipXMLDeclaration = 1;
 	$doc = XML::LibXML::Document->new();
 
-	# Configurable with no_prolog : do not put prolog (a bit gressive for readers) 
+	# Configurable with no_prolog : do not put prolog (a bit aggressive for readers) 
 	# version=1.0 encoding=UTF-8 : choose values
 	my $version = $opt{version} // "1.0";
 	my $encoding = $opt{encoding} // "UTF-8";
