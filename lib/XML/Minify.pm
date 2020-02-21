@@ -1,9 +1,9 @@
 package XML::Minify;
-use 5.008001;
+use 5.010000;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.99";
 
 use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML 
 # CPAN rules !
