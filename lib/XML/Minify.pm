@@ -332,6 +332,10 @@ __END__
 
 XML::Minify - It's a configurable XML minifier.
 
+=head1 WARNING
+
+THIS IS A BETA VERSION, API (OPTION NAMES) IS NOT FULLY STABILIZED AND MAY CHANGE WITHOUT NOTICE.
+
 =head1 SYNOPSIS
 
     use XML::Minify qw(minify);
