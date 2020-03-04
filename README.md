@@ -10,10 +10,10 @@ THIS IS A BETA VERSION, API (OPTION NAMES) IS NOT FULLY STABILIZED AND MAY CHANG
 # SYNOPSIS
 
 ```perl
-use XML::Minify qw(minify);
+use XML::Minify;
 
-my $xmlstr = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
-minify($xmlstr);
+my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+my $mini = minify($maxi);
 ```
 
 ## DEFAULT MINIFICATION

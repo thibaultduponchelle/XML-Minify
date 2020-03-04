@@ -9,6 +9,7 @@ use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML
 # CPAN rules !
 
 use Exporter 'import';
+our @EXPORT = qw(minify);
 our @EXPORT_OK = qw(minify);
 
 
@@ -24,6 +25,16 @@ sub traverse($$);
 
 sub minify($%) {
 	my $string = shift;
+
+
+	if(not defined $string) {
+		return undef;
+	}
+
+	if($string eq "") {
+		return "";
+	}
+
 	%opt = @_;
 
 	# Reinit output
@@ -338,10 +349,10 @@ THIS IS A BETA VERSION, API (OPTION NAMES) IS NOT FULLY STABILIZED AND MAY CHANG
 
 =head1 SYNOPSIS
 
-    use XML::Minify qw(minify);
+    use XML::Minify;
 
-    my $xmlstr = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
-    minify($xmlstr);
+    my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+    my $mini = minify($maxi);
 
 =head2 DEFAULT MINIFICATION
 
