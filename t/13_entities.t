@@ -39,9 +39,7 @@ chomp $entitynotexpanded;
 print $entity;
 
 #is(minify($entity, no_prolog => 1, expand_entities => 1), $entityexpanded, "Process entities");
-#is(minify($entity, no_prolog => 1), $entitynotexpanded, "Do not process entities (default)");
-
-ok(1);
+is(minify($entity, no_prolog => 1), $entitynotexpanded, "Do not process entities (default)");
 
 done_testing;
 
