@@ -9,12 +9,36 @@ THIS IS A BETA VERSION, API (OPTION NAMES) IS NOT FULLY STABILIZED AND MAY CHANG
 
 # SYNOPSIS
 
+Here is the simplest way to use XML::Minify :
+
 ```perl
 use XML::Minify;
 
 my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
 my $mini = minify($maxi);
 ```
+
+But a typical use would include some parameters like this :
+
+```perl
+use XML::Minify qw(minify);
+
+my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+my $mini = minify($maxi), no_prolog => 1, aggressive => 1);
+```
+
+**aggressive**, **destructive** and **insane** are shortcuts that define a set of parameters. 
+
+You can set indivually with :
+
+```perl
+use XML::Minify qw(minify);
+
+my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+my $mini = minify($maxi), no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);
+```
+
+Not every parameter has a **keep\_** neither a **remove\_**, please see below for detailed list.
 
 ## DEFAULT MINIFICATION
 

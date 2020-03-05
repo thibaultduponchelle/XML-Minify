@@ -349,10 +349,30 @@ THIS IS A BETA VERSION, API (OPTION NAMES) IS NOT FULLY STABILIZED AND MAY CHANG
 
 =head1 SYNOPSIS
 
+Here is the simplest way to use XML::Minify :
+
     use XML::Minify;
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
     my $mini = minify($maxi);
+
+But a typical use would include some parameters like this :
+
+    use XML::Minify qw(minify);
+
+    my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+    my $mini = minify($maxi), no_prolog => 1, aggressive => 1);
+
+B<aggressive>, B<destructive> and B<insane> are shortcuts that define a set of parameters. 
+
+You can set indivually with :
+
+    use XML::Minify qw(minify);
+
+    my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
+    my $mini = minify($maxi), no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);
+
+Not every parameter has a B<keep_> neither a B<remove_>, please see below for detailed list.
 
 =head2 DEFAULT MINIFICATION
 
