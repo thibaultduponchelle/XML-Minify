@@ -13,6 +13,7 @@ my $opt_help;
 
 GetOptions (
 	"expand-entities" => \$opt{expand_entities},
+	"process-xincludes" => \$opt{process_xincludes},
 	"remove-blanks-start"   => \$opt{remove_blanks_start},
 	"remove-blanks-end"   => \$opt{remove_blanks_end},
 	"remove-spaces-line-start"   => \$opt{remove_spaces_line_start},
@@ -60,6 +61,8 @@ Options:
 
 --expand-entities            expand entities 
 
+--process-xincludes          process xincludes
+
 --remove-blanks-start        remove blanks before text
 
 --remove-blanks-end          remove blanks after text
@@ -103,6 +106,10 @@ Options:
 =item B<--expand-entities>
 
 Expand entities. An entity is like &foo; 
+
+=item B<--process-xincludes>
+
+Process xicnludes. An xinclude is like <xi:include href="inc.xml"/>
 
 =item B<--remove-blanks-start>
 

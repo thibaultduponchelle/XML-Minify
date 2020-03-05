@@ -88,6 +88,14 @@ You can give various options:
     &foo; 
     ```
 
+- **process\_xincludes**
+
+    Process the xincludes. An xinclude is like 
+
+    ```
+    <xi:include href="inc.xml"/>
+    ```
+
 - **remove\_blanks\_start**
 
     Remove blanks (spaces, carriage return, line feed...) in front of text nodes. 

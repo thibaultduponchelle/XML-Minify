@@ -82,7 +82,9 @@ sub minify($%) {
 	# Configurable with expand_entities
 	$parser = XML::LibXML->new(expand_entities => $opt{expand_entities});
 	$tree = $parser->parse_string($string);
-	$parser->process_xincludes($tree);
+	if($opt{process_xincludes}) {
+		$parser->process_xincludes($tree);
+	}
 
 	$root = $tree->getDocumentElement;
 
@@ -445,6 +447,12 @@ You can give various options:
 Expand entities. An entity is like 
     
     &foo; 
+
+=item B<process_xincludes>
+
+Process the xincludes. An xinclude is like 
+    
+    <xi:include href="inc.xml"/>
 
 =item B<remove_blanks_start>
 
