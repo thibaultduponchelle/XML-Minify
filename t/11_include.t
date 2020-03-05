@@ -12,10 +12,10 @@ use XML::Minify qw(minify);
 chdir 't/data/';
 
 # Read file
-open my $fh, '<', 'catalog.xml' or die "Can't open file $!";
-my $catalog = do { local $/; <$fh> };
+open my $fh, '<', 'xinclude.xml' or die "Can't open file $!";
+my $xinclude = do { local $/; <$fh> };
 
-my $cataloginclude = << "END";
+my $xincludeprocessed = << "END";
 <catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
    <book id="bk101">
      <author>Chromatic</author>
@@ -32,9 +32,9 @@ my $cataloginclude = << "END";
 END
 # Same as xmllint catalog.xml --xinclude
 
-chomp $cataloginclude;
+chomp $xincludeprocessed;
 
-is(minify($catalog, no_prolog => 1), $cataloginclude, "Process xinclude");
+is(minify($xinclude, no_prolog => 1), $xincludeprocessed, "Process xinclude");
 
 done_testing;
 
