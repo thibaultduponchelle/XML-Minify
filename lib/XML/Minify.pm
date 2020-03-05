@@ -146,12 +146,10 @@ sub minify($%) {
 		} elsif($flc->nodeType eq XML_PI_NODE) {
 			# Configurable with keep_pi
 			my $str = $flc->toString();
-			$str =~ s/\R*//g;
 			$opt{keep_pi} and $output .= $str;
 		} elsif($flc->nodeType eq XML_COMMENT_NODE) {
 			# Configurable with keep_comments
 			my $str = $flc->toString();
-			$str =~ s/\R*//g;
 			$opt{keep_comments} and $output .= $str;
 		} elsif($flc->nodeType eq XML_ELEMENT_NODE) { # Actually document node as if we do getDocumentNode
 			# "main" tree, only one (parser is protecting us)

@@ -40,7 +40,9 @@ my $keepdtd = << "END";
 </catalog>
 END
 
-# TODO : Why pi and dtd are concatenated and why removed comment do not remove line ?
+# TODO : Why pi and dtd are concatenated and why removed comment do not remove line ? 
+# We always remove cr lf in and between first level children
+# Removed comment only remove comment, not text around
 # TODO : We can have a pi not first level child ?
 
 chomp $maxi;
