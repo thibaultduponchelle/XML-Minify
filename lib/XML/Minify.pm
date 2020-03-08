@@ -325,6 +325,7 @@ sub traverse($$) {
 			
 			my $childbak = $child;
 			my @siblings = ();
+			# We want to inspect siblings to the right until we reach an element
 			while($child = $child->nextSibling) {
 				if($child->nodeType eq XML_ELEMENT_NODE) {
 					last;
@@ -332,12 +333,17 @@ sub traverse($$) {
 				push @siblings, $child;
 			}
 			$child = $childbak;
+			# We inspect to the left also
 			while($child = $child->previousSibling) {
 				if($child->nodeType eq XML_ELEMENT_NODE) {
 					last;
 				}
 				push @siblings, $child;
 			}
+
+			# Then we will look at each siling to check
+			# If it is an empty text node or not
+			# If it is something that will be removed or not
 			foreach my $child (@siblings) {
 				if($child->nodeType eq XML_TEXT_NODE) {
 					if($child->data =~ m/[^ \t\r\n]/) {
@@ -358,15 +364,13 @@ sub traverse($$) {
 					$empty = 0;
 					last;
 				}
-
-				if($child->nodeType eq XML_ELEMENT_NODE) { 
-					last;
-				}
 			}
 
 
 			$child = $childbak;
 
+			# Were all siblings empty ? 
+			# Are we alone ? (count child nodes from parent instead of filtered siblings)
 			if($empty and @{$child->parentNode->childNodes()} > 1) {
 				# Should it be configurable ? 
 				if($do_not_remove_blanks{$child->parentNode->getName()}) {
