@@ -26,17 +26,14 @@ my $maxi = << "EOM";
 EOM
 
 my $mini = << "EOM";
-<person>
-<name>
+<person><name>
 Tib
 Bob
 Richard
-</name>
-<level>
+</name><level>
 
 
-</level>
-</person>
+</level></person>
 EOM
 
 chomp $mini;
@@ -58,45 +55,36 @@ my $maxi_with_spaces = << "EOM";
 EOM
 
 my $mininospaces_linestart = << "EOM";
-<person>
-<name>
+<person><name>
 
 Tib   
 Bob   
 Richard   
 
-</name>
-<level>
-</level>
-</person>
+</name><level>
+</level></person>
 EOM
 
 my $mininospaces_lineend = << "EOM";
-<person>
-<name>
+<person><name>
 
    Tib
    Bob
    Richard
 
-</name>
-<level>
-</level>
-</person>
+</name><level>
+</level></person>
 EOM
 
 my $mininospaces_lineboth = << "EOM";
-<person>
-<name>
+<person><name>
 
 Tib
 Bob
 Richard
 
-</name>
-<level>
-</level>
-</person>
+</name><level>
+</level></person>
 EOM
 
 chomp $maxi_with_spaces;
@@ -124,17 +112,14 @@ my $maxi_with_spaces_inside_words = << "EOM";
 EOM
 
 my $mini_keepspaces_inside_words = << "EOM";
-<person>
-<name>
+<person><name>
 
 T i b
 B o b
 R i c h a r d
 
-</name>
-<level>
-</level>
-</person>
+</name><level>
+</level></person>
 EOM
 
 

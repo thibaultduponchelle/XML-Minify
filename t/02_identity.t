@@ -13,10 +13,7 @@ my $maxi = << "EOM";
 EOM
 
 my $mini = << "EOM";
-<person>
-  <name>Tib</name>
-  <level/>
-</person>
+<person><name>Tib</name><level/></person>
 EOM
 
 chomp $mini;

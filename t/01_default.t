@@ -26,5 +26,9 @@ $maxi = "<empty1       ><empty2></empty2></empty1        >";
 $mini = "<empty1><empty2/></empty1>";
 is(minify($maxi, no_prolog => 1), $mini, "Merge tags and drop spaces (2)");
 
+$maxi = "<empty1       ><empty2>   </empty2></empty1        >";
+$mini = "<empty1><empty2>   </empty2></empty1>";
+is(minify($maxi, no_prolog => 1), $mini, "Do no drop these spaces (without more options)");
+
 done_testing;
 

@@ -12,32 +12,33 @@ my $maxi = << "END";
 <catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude">
 <book/>
 <!-- This is a comment-->
-<?xml-stylesheet href="my-style.css"?>
+<![CDATA[ ...]]>
+<tag>
+</tag>
+
+
+
+
+
 </catalog>
 END
 
 my $keepcomments = << "END";
-<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude">
-<book/>
+<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/>
 <!-- This is a comment-->
 
-</catalog>
+<tag>
+</tag></catalog>
 END
 
 my $keeppi = << "END";
-<?xml-stylesheet href="my-style.css"?><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude">
-<book/>
-
-
-</catalog>
+<?xml-stylesheet href="my-style.css"?><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/><tag>
+</tag></catalog>
 END
 
 my $keepdtd = << "END";
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd" [<!ELEMENT element-name EMPTY>]><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude">
-<book/>
-
-
-</catalog>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd" [<!ELEMENT element-name EMPTY>]><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/><tag>
+</tag></catalog>
 END
 
 # TODO : Why pi and dtd are concatenated and why removed comment do not remove line ? 

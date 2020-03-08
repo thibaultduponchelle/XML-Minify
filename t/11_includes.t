@@ -16,36 +16,12 @@ open my $fh, '<', 'xinclude.xml' or die "Can't open file $!";
 my $xinclude = do { local $/; <$fh> };
 
 my $xincludeprocessed = << "END";
-<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
-   <book id="bk101">
-     <author>Chromatic</author>
-     <title>Modern Perl</title>
-   </book>
-
-   <include>me</include>
-
-   <book id="bk112">
-     <author>Damian Conway</author>
-     <title>Perl Best Practices</title>
-   </book>
-</catalog>
+<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0"><book id="bk101"><author>Chromatic</author><title>Modern Perl</title></book><include>me</include><book id="bk112"><author>Damian Conway</author><title>Perl Best Practices</title></book></catalog>
 END
 # Same as xmllint catalog.xml --xinclude
 
 my $xincludenotprocessed = << "END";
-<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0">
-   <book id="bk101">
-     <author>Chromatic</author>
-     <title>Modern Perl</title>
-   </book>
-
-   <xi:include href="inc.xml"/>
-
-   <book id="bk112">
-     <author>Damian Conway</author>
-     <title>Perl Best Practices</title>
-   </book>
-</catalog>
+<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0"><book id="bk101"><author>Chromatic</author><title>Modern Perl</title></book><xi:include href="inc.xml"/><book id="bk112"><author>Damian Conway</author><title>Perl Best Practices</title></book></catalog>
 END
 
 

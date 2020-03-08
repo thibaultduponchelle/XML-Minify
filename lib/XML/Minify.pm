@@ -254,11 +254,14 @@ sub traverse($$) {
         my $node = shift;
         my $outnode = shift;
 
+
 	my $name = $node->getName();
 	my $newnode = $doc->createElement($name);
+
 	if($outnode) {
 		$outnode->addChild($newnode);
 	}
+
 	$outnode = $newnode;
 
         my @as = $node->attributes ;
@@ -269,55 +272,110 @@ sub traverse($$) {
         foreach my $child ($node->childNodes) {
 		if($child->nodeType eq XML_TEXT_NODE) {
 			my $str = $child->data;
-		        #print "Text node : $str (". $node->getName() . ") ". @{$child->parentNode->childNodes()} ."\n" ;
 
-			# All these substitutions aim to remove indentation that people tend to put in xml files...
-			# ...Or just clean on demand (default behavior keeps these blanks)
-
-
-			# Blanks are several things like spaces, tabs, lf, cr, vertical space...
-
-			# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
-			$opt{remove_blanks_start} and $str =~ s/\A\s*//g;
-			# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
-			$opt{remove_blanks_end} and $str =~ s/\s*\Z//g;
+			
+			if($do_not_remove_blanks{$child->parentNode->getName()}) {
+				# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
+			} else {
+				# All these substitutions aim to remove indentation that people tend to put in xml files...
+				# ...Or just clean on demand (default behavior keeps these blanks)
 
 
-			# Only CR and LF
+				# Blanks are several things like spaces, tabs, lf, cr, vertical space...
 
-			# Configurable with remove_cr_lf_everywhere : remove extra lf/cr everywhere
-			$opt{remove_cr_lf_everywhere} and $str =~ s/\R*//g;
+				# Configurable with remove_blanks_start : remove extra space/lf/cr at the start of the string
+				$opt{remove_blanks_start} and $str =~ s/\A\s*//g;
+				# Configurable with remove_blanks_end : remove extra space/lf/cr at the end of the string
+				$opt{remove_blanks_end} and $str =~ s/\s*\Z//g;
 
 
-			# Spaces are 2 things : space and tabs
+				# Only CR and LF
 
-			# Configurable with remove_spaces_line_start : remove extra spaces or tabs at the start of each line
-			$opt{remove_spaces_line_start} and $str =~ s/^( |\t)*//mg;
-			# Configurable with remove_spaces_line_end : remove extra spaces or tabs at the end of each line
-			$opt{remove_spaces_line_end} and $str =~ s/( |\t)*$//mg;
-			# Configurable with remove_spaces_everywhere : remove extra spaces everywhere
-			$opt{remove_spaces_everywhere} and $str =~ s/( |\t)*//g;
+				# Configurable with remove_cr_lf_everywhere : remove extra lf/cr everywhere
+				$opt{remove_cr_lf_everywhere} and $str =~ s/\R*//g;
 
-			# Configurable with remove_empty_text : remove text nodes that contains only space/lf/cr
-			$opt{remove_empty_text} and $str =~ s/\A\s*\Z//g;
 
+				# Spaces are 2 things : space and tabs
+
+				# Configurable with remove_spaces_line_start : remove extra spaces or tabs at the start of each line
+				$opt{remove_spaces_line_start} and $str =~ s/^( |\t)*//mg;
+				# Configurable with remove_spaces_line_end : remove extra spaces or tabs at the end of each line
+				$opt{remove_spaces_line_end} and $str =~ s/( |\t)*$//mg;
+				# Configurable with remove_spaces_everywhere : remove extra spaces everywhere
+				$opt{remove_spaces_everywhere} and $str =~ s/( |\t)*//g;
+
+				# Configurable with remove_empty_text : remove text nodes that contains only space/lf/cr
+				$opt{remove_empty_text} and $str =~ s/\A\s*\Z//g;
+			}
+			
 			# Let me explain, we could have text nodes basically everywhere, and we don't know if whitespaces are ignorable or not. 
 			# As we want to minify the xml, we can't just keep all blanks, because it is generally indentation or spaces that could be ignored.
 			# Here is the strategy : 
 			# A. If we have <name>   </name> we should keep it anyway (unless forced with argument)
-			# B. If we have </name>   </person> we should remove (in this case parent node contains more than one child node : text node + element node)
-			# C. If we have <person>   <name> we should remove it (in this case parent node contains more than one child node : text node + element node)
-			# D. If we have </person>   <person> we should remove it (in this case parent node contains more than one child node : text node + element node)
-			# B, C, D : remove... unless explicitely declared in DTD as potential #PCDATA container
-			if( @{$child->parentNode->childNodes()} > 1 ) { 
-				# Should it be configurable ? 
-				if(!$do_not_remove_blanks{$child->parentNode->getName()}) {
-					# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
-				} else {
-					$str =~ s/^\s*$//g;
+			# B. If we have </name>   </person> we should *maybe* remove (in this case parent node contains more than one child node : text node + element node)
+			# C. If we have <person>   <name> we should *maybe* remove it (in this case parent node contains more than one child node : text node + element node)
+			# D. If we have </person>   <person> we should *maybe* remove it (in this case parent node contains more than one child node : text node + element node)
+			# B, C, D : remove... unless explicitely declared in DTD as potential #PCDATA container OR unless it contains something...
+			# *something* is a comment (not removed), some other text not empty, some cdata.
+			# Imagine </name>   <!-- comment --> some text </person> then we don't want to remove spaces in the first text node
+			# Same with </name>   <!-- comment -->   </person>
+			# But if comments are removed then the latter piece of code will become </name></person>
+
+			my $empty = 1;
+			
+			my $childbak = $child;
+			my @siblings = ();
+			while($child = $child->nextSibling) {
+				if($child->nodeType eq XML_ELEMENT_NODE) {
+					last;
+				}
+				push @siblings, $child;
+			}
+			$child = $childbak;
+			while($child = $child->previousSibling) {
+				if($child->nodeType eq XML_ELEMENT_NODE) {
+					last;
+				}
+				push @siblings, $child;
+			}
+			foreach my $child (@siblings) {
+				if($child->nodeType eq XML_TEXT_NODE) {
+					if($child->data =~ m/[^ \t\r\n]/) {
+						# Not empty
+						$empty = 0;
+						last;
+					}
+				}
+				if($child->nodeType eq XML_COMMENT_NODE and $opt{keep_comments}) {
+					$empty = 0;
+					last;
+				}
+				if($child->nodeType eq XML_CDATA_SECTION_NODE and $opt{keep_cdatas}) {
+					$empty = 0;
+					last;
+				}
+				if($child->nodeType eq XML_ENTITY_REF_NODE) {
+					$empty = 0;
+					last;
+				}
+
+				if($child->nodeType eq XML_ELEMENT_NODE) { 
+					last;
 				}
 			}
 
+
+			$child = $childbak;
+
+			if($empty and @{$child->parentNode->childNodes()} > 1) {
+				# Should it be configurable ? 
+				if($do_not_remove_blanks{$child->parentNode->getName()}) {
+					# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
+				} else {
+					$str =~ s/\A\R*\Z//mg;
+					$str =~ s/\A\s*\Z//mg;
+				}
+			}
 			$outnode->appendText($str);
 		} elsif($child->nodeType eq XML_ENTITY_REF_NODE) {
 			# Configuration will be done above when creating document
@@ -325,10 +383,11 @@ sub traverse($$) {
 			$outnode->addChild($er); 
 		} elsif($child->nodeType eq XML_COMMENT_NODE) {
 			# Configurable with keep_comments
-			$opt{keep_comments} and $outnode->addChild($child);
+			my $com = $doc->createComment($child->getData());
+			$opt{keep_comments} and $outnode->addChild($com); 
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
 			# Configurable with keep_cdata
-			$opt{keep_cdatas} and $outnode->addChild($child);
+			$opt{keep_cdatas} and $outnode->addChild($child); # SAME PROBLEM AS COMMENTS ?
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}

@@ -23,20 +23,17 @@ my $maxi = << "EOM";
 EOM
 
 my $mini = << "EOM";
-<root>
-<spaces>
+<root><spaces>
 indent
 indent
 indent
 indent
-</spaces>
-<tabs>
+</spaces><tabs>
 indent
 indent
 indent
 indent
-</tabs>
-</root>
+</tabs></root>
 EOM
 
 chomp $mini;
