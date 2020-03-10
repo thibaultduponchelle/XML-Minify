@@ -37,8 +37,6 @@ END
 chomp $entityexpanded;
 chomp $entitynotexpanded;
 
-#print $entity;
-
 #is(minify($entity, no_prolog => 1, expand_entities => 1), $entityexpanded, "Process entities");
 is(minify($entity, no_prolog => 1), $entitynotexpanded, "Do not process entities (default)");
 
@@ -66,8 +64,6 @@ chomp $entitynotexpanded;
 
 #is(minify($entity, no_prolog => 1, expand_entities => 1), $entityexpanded, "Process entities with a tag therefore some blanks cleaning is done");
 is(minify($entity, no_prolog => 1), $entitynotexpanded, "Do not process entities (default)");
-
-
 
 done_testing;
 

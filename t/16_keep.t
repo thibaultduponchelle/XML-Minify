@@ -67,6 +67,7 @@ END
 #            Removed comment only remove comment, not text around therefore not the carriage return after it
 #
 # Question - We can have a pi not first level child ? TODO
+# Answer   - Nothing seems to say the contrary (neither xmllint nor doc... OK I only spent 5 mins to try to find doc about it xD)
 
 chomp $maxi;
 chomp $keepcomments;
