@@ -13,6 +13,8 @@ my $maxi = << "END";
 <book/>
 <!-- This is a comment-->
 <![CDATA[ ...]]>
+<?xml-stylesheet href="my-style.css"?>
+
 <tag>
 </tag>
 
@@ -27,12 +29,19 @@ my $keepcomments = << "END";
 <catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/>
 <!-- This is a comment-->
 
+
+
 <tag>
 </tag></catalog>
 END
 
 my $keeppi = << "END";
-<?xml-stylesheet href="my-style.css"?><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/><tag>
+<?xml-stylesheet href="my-style.css"?><catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/>
+
+
+<?xml-stylesheet href="my-style.css"?>
+
+<tag>
 </tag></catalog>
 END
 
@@ -45,6 +54,8 @@ my $keepcdata = << "END";
 <catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/>
 
 <![CDATA[ ...]]>
+
+
 <tag>
 </tag></catalog>
 END

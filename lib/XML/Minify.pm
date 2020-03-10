@@ -360,6 +360,11 @@ sub traverse($$) {
 					$empty = 0;
 					last;
 				}
+				if($child->nodeType eq XML_PI_NODE and $opt{keep_pi}) {
+					$empty = 0;
+					last;
+				}
+				# Entity refs : we can choose to expand or not... but not to drop them
 				if($child->nodeType eq XML_ENTITY_REF_NODE) {
 					$empty = 0;
 					last;
@@ -391,9 +396,13 @@ sub traverse($$) {
 			$opt{keep_comments} and $outnode->addChild($com); 
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
 			# Configurable with keep_cdata
-			print "CDATA !!!\n\n";
 			my $cdata = $doc->createCDATASection($child->getData());
-			$opt{keep_cdata} and $outnode->addChild($cdata); # SAME PROBLEM AS COMMENTS ?
+			$opt{keep_cdata} and $outnode->addChild($cdata);
+		} elsif($child->nodeType eq XML_PI_NODE) {
+			# Configurable with keep_pi
+			#my $pi = $child->cloneNode(1);
+			my $pi = $doc->createPI($child->nodeName, $child->getData());
+			$opt{keep_pi} and $outnode->addChild($pi);
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}
