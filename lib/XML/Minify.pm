@@ -3,7 +3,7 @@ use 5.010000;
 use strict;
 use warnings;
 
-our $VERSION = "0.99";
+our $VERSION = "1.00";
 
 use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML 
 # CPAN rules !

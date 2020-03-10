@@ -2,5 +2,12 @@ Revision history for Perl extension XML-Minify
 
 {{$NEXT}}
 
-    - original version migrated to standalone xml-minifier.pl script
+    - More modes : default, aggressive, destructive, insane
+    - Disable some behaviour with keep_ options and/or remove_ options
+    - Several tests (more than 100)
+    - API almost stabilized
+
+0.99 2020-02-21T18:38:29Z
+
+    - Original version migrated to standalone xml-minifier.pl script
 
