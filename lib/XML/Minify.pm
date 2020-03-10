@@ -396,6 +396,7 @@ sub traverse($$) {
 			$opt{keep_comments} and $outnode->addChild($com); 
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
 			# Configurable with keep_cdata
+			#my $cdata = $child->cloneNode(1);
 			my $cdata = $doc->createCDATASection($child->getData());
 			$opt{keep_cdata} and $outnode->addChild($cdata);
 		} elsif($child->nodeType eq XML_PI_NODE) {

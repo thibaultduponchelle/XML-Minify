@@ -30,6 +30,14 @@ is(minify($maxi, insane => 1), minify($maxi, destructive => 0, aggressive => 0, 
 is(minify($maxi, insane => 1), minify($maxi, insane => 1, destructive => 0, aggressive => 0), "Override aggressive and destructive with insane (change order)");
 is(minify($maxi, insane => 1), minify($maxi, insane => 1, destructive => 1, aggressive => 1), "Insane contains aggressive and destructive");
 is(minify($maxi, insane => 1), minify($maxi, destructive => 1, aggressive => 1, insane => 1), "Insane contains aggressive and destructive (change order)");
+
+
+is(minify($maxi, insane => 0), minify($maxi, destructive => 0), "Not insane is like not destructive");
+is(minify($maxi, insane => 0), minify($maxi, aggressive => 0), "Not insane is like not aggressive");
+is(minify($maxi, destructive => 0), minify($maxi, aggressive => 0), "Not destructive is like not aggressive");
+is(minify($maxi, aggressive => 0), minify($maxi), "Not aggressive is like... Nothing");
+is(minify($maxi, destructive => 0), minify($maxi), "Not destructive is like.. Nothing");
+is(minify($maxi, insane => 0), minify($maxi), "Not insane is like.. Nothing");
 ok(1);
 
 done_testing;

@@ -37,4 +37,3 @@ chomp $mini;
 is(minify($maxi, no_prolog => 1, insane => 1), $mini, "Insane");
 
 done_testing;
-

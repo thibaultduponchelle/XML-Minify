@@ -66,7 +66,7 @@ END
 # Answer   - PI and DTD are first level children and we always remove cr lf in and between first level children
 #            Removed comment only remove comment, not text around therefore not the carriage return after it
 #
-# Question - We can have a pi not first level child ? TODO
+# Question - We can have a pi not first level child ?
 # Answer   - Nothing seems to say the contrary (neither xmllint nor doc... OK I only spent 5 mins to try to find doc about it xD)
 
 chomp $maxi;
