@@ -473,13 +473,21 @@ They were decided by the author as relevant but you can disable individually wit
 
 =back
 
-This is the default and should be perceived as lossyless minification in term of semantic. 
+In addition, the minifier will drop every blanks between the first level children. 
+What you can find between first level children is not supposed to be meaningful data then we we can safely remove formatting here. 
+For instance we can remove a carriage return between prolog and a processing instruction (or even inside a DTD).
+
+In addition again, the minifier will I<smartly> remove blanks between tags. By I<smart> I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a I<not removed> comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect this (obviously). But if there is no DTD (very often), we are blind and simply use the approach I just described above.
+
+
+Everything listed above is the default and should be perceived as almost lossyless minification in term of semantic (for humans). 
 
 It's not completely if you consider these things as data, but in this case you simply can't minify as you can't touch anything ;)
 
+
 =head2 EXTRA MINIFICATION
 
-In addition, you could be B<brutal> and remove characters in the text nodes (sort of "cleaning") : 
+In addition, you could enable mode B<aggressive>, B<destructive> or B<insane> to remove characters in the text nodes (sort of "cleaning") : 
 
 =head3 Aggressive
 
