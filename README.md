@@ -259,19 +259,19 @@ You can give various options:
 
 - **aggressive**
 
-    Enable aggressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text if they are not defined only.
+    Enable **aggressive** mode. Enables options **remove\_blanks\_starts**, **remove\_blanks\_end** and **remove\_empty\_text** if they are not defined only.
     Other options still keep their value.
 
 - **destructive**
 
-    Enable destructive mode. Enable options --remove-spaces-line-starts --remove-spaces-line-end if they are not defined only.
-    Enable also aggressive mode.
+    Enable **destructive** mode. Enable options **remove\_spaces\_line\_starts** and **remove\_spaces\_line\_end** if they are not defined only.
+    Enable also **aggressive** mode.
     Other options still keep their value.
 
 - **insane**
 
-    Enable insane mode. Enables options --remove-cr-lf-everywhere --remove-spaces-everywhere if they are not defined only.
-    Enable also destructive mode and insane mode.
+    Enable **insane** mode. Enables options **remove\_cr\_lf\_everywhere** and **remove\_spaces\_everywhere** if they are not defined only.
+    Enable also **destructive** mode and **aggressive** mode.
     Other options still keep their value.
 
 # LICENSE

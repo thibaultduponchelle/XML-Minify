@@ -668,19 +668,19 @@ Specify encoding.
 
 =item B<aggressive>
 
-Enable aggressive mode. Enables options --remove-blanks-starts --remove-blanks-end --remove-empty-text if they are not defined only.
+Enable B<aggressive> mode. Enables options B<remove_blanks_starts>, B<remove_blanks_end> and B<remove_empty_text> if they are not defined only.
 Other options still keep their value.
 
 =item B<destructive>
 
-Enable destructive mode. Enable options --remove-spaces-line-starts --remove-spaces-line-end if they are not defined only.
-Enable also aggressive mode.
+Enable B<destructive> mode. Enable options B<remove_spaces_line_starts> and B<remove_spaces_line_end> if they are not defined only.
+Enable also B<aggressive> mode.
 Other options still keep their value.
 
 =item B<insane>
 
-Enable insane mode. Enables options --remove-cr-lf-everywhere --remove-spaces-everywhere if they are not defined only.
-Enable also destructive mode and insane mode.
+Enable B<insane> mode. Enables options B<remove_cr_lf_everywhere> and B<remove_spaces_everywhere> if they are not defined only.
+Enable also B<destructive> mode and B<aggressive> mode.
 Other options still keep their value.
 
 =back 
