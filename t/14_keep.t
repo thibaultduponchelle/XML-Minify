@@ -41,19 +41,32 @@ my $keepdtd = << "END";
 </tag></catalog>
 END
 
-# TODO : Why pi and dtd are concatenated and why removed comment do not remove line ? 
-# We always remove cr lf in and between first level children
-# Removed comment only remove comment, not text around
-# TODO : We can have a pi not first level child ?
+my $keepcdata = << "END";
+<catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude"><book/>
+
+<![CDATA[ ...]]>
+<tag>
+</tag></catalog>
+END
+
+
+
+# Question - Why pi and dtd are concatenated and why removed comment do not remove line ? 
+# Answer   - PI and DTD are first level children and we always remove cr lf in and between first level children
+#            Removed comment only remove comment, not text around therefore not the carriage return after it
+#
+# Question - We can have a pi not first level child ? TODO
 
 chomp $maxi;
 chomp $keepcomments;
 chomp $keeppi;
 chomp $keepdtd;
+chomp $keepcdata;
 
 is(minify($maxi, no_prolog => 1, keep_comments => 1), $keepcomments, "Keep comments");
 is(minify($maxi, no_prolog => 1, keep_pi => 1), $keeppi, "Keep pi");
 is(minify($maxi, no_prolog => 1, keep_dtd => 1), $keepdtd, "Keep dtd");
+is(minify($maxi, no_prolog => 1, keep_cdata => 1), $keepcdata, "Keep cdata");
 
 done_testing;
 

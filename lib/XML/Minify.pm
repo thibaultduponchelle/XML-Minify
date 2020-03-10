@@ -356,7 +356,7 @@ sub traverse($$) {
 					$empty = 0;
 					last;
 				}
-				if($child->nodeType eq XML_CDATA_SECTION_NODE and $opt{keep_cdatas}) {
+				if($child->nodeType eq XML_CDATA_SECTION_NODE and $opt{keep_cdata}) {
 					$empty = 0;
 					last;
 				}
@@ -391,7 +391,9 @@ sub traverse($$) {
 			$opt{keep_comments} and $outnode->addChild($com); 
 		} elsif($child->nodeType eq XML_CDATA_SECTION_NODE) {
 			# Configurable with keep_cdata
-			$opt{keep_cdatas} and $outnode->addChild($child); # SAME PROBLEM AS COMMENTS ?
+			print "CDATA !!!\n\n";
+			my $cdata = $doc->createCDATASection($child->getData());
+			$opt{keep_cdata} and $outnode->addChild($cdata); # SAME PROBLEM AS COMMENTS ?
 		} elsif($child->nodeType eq XML_ELEMENT_NODE) {
 			$outnode->addChild(traverse($child, $outnode)); 
 		}
