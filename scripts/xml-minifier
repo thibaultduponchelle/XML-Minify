@@ -30,6 +30,9 @@ GetOptions (
 	"version=s"   => \$opt{version},
 	"encoding=s"   => \$opt{encoding},
 	"aggressive"   => \$opt{aggressive},
+	"agressive"   => \$opt{aggressive},
+	"destructive"   => \$opt{destructive},
+	"insane"   => \$opt{insane},
 	"help"   => \$opt_help          
 	) or die("Error in command line arguments (maybe \"$0 --help\" could help ?)\n");
 
