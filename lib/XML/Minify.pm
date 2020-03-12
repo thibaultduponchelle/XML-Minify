@@ -13,7 +13,7 @@ our @EXPORT = qw(minify);
 our @EXPORT_OK = qw(minify);
 
 
-my %do_not_remove_blanks = ();
+my %do_not_remove_blanks;
 my %opt = ();
 my $doc;
 my $tree;
@@ -25,6 +25,8 @@ sub traverse($$);
 
 sub minify($%) {
 	my $string = shift;
+
+	%do_not_remove_blanks = ();
 
 
 	if(not defined $string) {
@@ -122,7 +124,7 @@ sub minify($%) {
 			# I need to manually (yuck) parse the node as XML::LibXML does not provide (wrap) such function
 			foreach my $dc ($flc->childNodes()) {
 				if($dc->nodeType == XML_ELEMENT_DECL) {
-					if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\)>/) {
+					if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\).*>/) {
 						$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
 					}
 				}
@@ -376,6 +378,7 @@ sub traverse($$) {
 
 			# Were all siblings empty ? 
 			# Are we alone ? (count child nodes from parent instead of filtered siblings)
+			# If there is a DTD, probably we can remove even in the leafs (I'm not doing this at the moment) 
 			if($empty and @{$child->parentNode->childNodes()} > 1) {
 				# Should it be configurable ? 
 				if($do_not_remove_blanks{$child->parentNode->getName()}) {
