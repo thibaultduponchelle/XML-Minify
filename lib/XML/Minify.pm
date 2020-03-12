@@ -495,7 +495,7 @@ In addition, the minifier will drop every blanks between the first level childre
 What you can find between first level children is not supposed to be meaningful data then we we can safely remove formatting here. 
 For instance we can remove a carriage return between prolog and a processing instruction (or even inside a DTD).
 
-In addition again, the minifier will I<smartly> remove blanks between tags. By I<smart> I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a I<not removed> comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect obviously respect this (except if you decide the contrary with B<ignore_dtd>. 
+In addition again, the minifier will I<smartly> remove blanks between tags. By I<smart> I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a I<not removed> comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect obviously respect this (except if you decide the contrary with ignore_dtd).
 
 If there is no DTD (very often), we are blind and simply use the approach I just described above (keep blanks in leafs, remove blanks in nodes if all siblings contains only blanks).
 
