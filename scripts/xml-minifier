@@ -26,6 +26,7 @@ GetOptions (
 	"keep-cdata"   => \$opt{keep_cdatas},
 	"keep-pi"   => \$opt{keep_pi},
 	"keep-dtd"   => \$opt{keep_dtd},
+	"ignore-dtd"   => \$opt{ignore_dtd},
 	"no-prolog"   => \$opt{no_prolog},
 	"version=s"   => \$opt{version},
 	"encoding=s"   => \$opt{encoding},
@@ -87,6 +88,8 @@ Options:
 --keep-pi                    keep processing instructions
 
 --keep-dtd                   keep dtd
+
+--ignore-dtd                 ignore dtd
 
 --no-prolog                  remove prolog (version and encoding)
 
@@ -167,6 +170,10 @@ Keep processing instructions. A processing instruction is like <?xml-stylesheet 
 =item B<--keep-dtd>
 
 Keep DTD.
+
+=item B<--ignore-dtd>
+
+Do not read DTD. The minifier reads the DTD to get informations about meaningful blanks.
 
 =item B<--no-version>
 

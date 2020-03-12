@@ -56,7 +56,9 @@ In addition, the minifier will drop every blanks between the first level childre
 What you can find between first level children is not supposed to be meaningful data then we we can safely remove formatting here. 
 For instance we can remove a carriage return between prolog and a processing instruction (or even inside a DTD).
 
-In addition again, the minifier will _smartly_ remove blanks between tags. By _smart_ I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a _not removed_ comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect this (obviously). But if there is no DTD (very often), we are blind and simply use the approach I just described above.
+In addition again, the minifier will _smartly_ remove blanks between tags. By _smart_ I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a _not removed_ comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect obviously respect this (except if you decide the contrary with **ignore\_dtd**. 
+
+If there is no DTD (very often), we are blind and simply use the approach I just described above (keep blanks in leafs, remove blanks in nodes if all siblings contains only blanks).
 
 Everything listed above is the default and should be perceived as almost lossyless minification in term of semantic (for humans). 
 
@@ -239,6 +241,14 @@ You can give various options:
 
     Keep DTD.
 
+- **ignore\_dtd**
+
+    When set, the minifier will ignore informations from the DTD (typically where blanks are meaningfull)
+
+    This option can be used with **keep\_dtd**, you can decide to get informations from DTD then remove it (or the contrary).
+
+    Then I must repeat that **ignore\_dtd** is NOT the contrary of **keep\_dtd**
+
 - **no\_prolog**
 
     Do not put prolog (having no prolog is aggressive for XML readers).
@@ -246,7 +256,7 @@ You can give various options:
     Prolog is at the start of the XML file and look like this :
 
     ```
-    <?xml version="1.0" encoding="UTF-8"?>";
+    <?xml version="1.0" encoding="UTF-8"?>
     ```
 
 - **version**

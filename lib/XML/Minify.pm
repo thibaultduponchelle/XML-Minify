@@ -14,6 +14,7 @@ our @EXPORT_OK = qw(minify);
 
 
 my %do_not_remove_blanks;
+my $we_have_infos_from_dtd;
 my %opt = ();
 my $doc;
 my $tree;
@@ -27,6 +28,7 @@ sub minify($%) {
 	my $string = shift;
 
 	%do_not_remove_blanks = ();
+	$we_have_infos_from_dtd = 0;
 
 
 	if(not defined $string) {
@@ -122,10 +124,15 @@ sub minify($%) {
 			# XML_NOTATION_DECL
 
 			# I need to manually (yuck) parse the node as XML::LibXML does not provide (wrap) such function
-			foreach my $dc ($flc->childNodes()) {
-				if($dc->nodeType == XML_ELEMENT_DECL) {
-					if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\).*>/) {
-						$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
+			if($opt{ignore_dtd}) {
+				# Do not try to get infos from DTD
+			} else {
+				foreach my $dc ($flc->childNodes()) {
+					if($dc->nodeType == XML_ELEMENT_DECL) {
+						$we_have_infos_from_dtd = "We can remove empty text in leafs if not protected by DTD";
+						if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\).*>/) {
+							$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
+						}
 					}
 				}
 			}
@@ -379,7 +386,15 @@ sub traverse($$) {
 			# Were all siblings empty ? 
 			# Are we alone ? (count child nodes from parent instead of filtered siblings)
 			# If there is a DTD, probably we can remove even in the leafs (I'm not doing this at the moment) 
-			if($empty and @{$child->parentNode->childNodes()} > 1) {
+			if($we_have_infos_from_dtd) {
+				# Only trust DTD, no need to consider if we are in a leaf or node
+				if($do_not_remove_blanks{$child->parentNode->getName()}) {
+					# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
+				} else {
+					$str =~ s/\A\R*\Z//mg;
+					$str =~ s/\A\s*\Z//mg;
+				}
+			} elsif($empty and @{$child->parentNode->childNodes()} > 1) {
 				# Should it be configurable ? 
 				if($do_not_remove_blanks{$child->parentNode->getName()}) {
 					# DO NOT REMOVE, PROTECTED BY DTD ELEMENT DECL	
@@ -480,7 +495,9 @@ In addition, the minifier will drop every blanks between the first level childre
 What you can find between first level children is not supposed to be meaningful data then we we can safely remove formatting here. 
 For instance we can remove a carriage return between prolog and a processing instruction (or even inside a DTD).
 
-In addition again, the minifier will I<smartly> remove blanks between tags. By I<smart> I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a I<not removed> comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect this (obviously). But if there is no DTD (very often), we are blind and simply use the approach I just described above.
+In addition again, the minifier will I<smartly> remove blanks between tags. By I<smart> I mean that it will not remove blanks if we are in a leaf (more chances to be meaningful blanks) or if the node contains something that will persist (a I<not removed> comment/cdata/PI, or a piece of text not empty). The meaningfulness of blanks is given by a DTD if present and we respect obviously respect this (except if you decide the contrary with B<ignore_dtd>. 
+
+If there is no DTD (very often), we are blind and simply use the approach I just described above (keep blanks in leafs, remove blanks in nodes if all siblings contains only blanks).
 
 
 Everything listed above is the default and should be perceived as almost lossyless minification in term of semantic (for humans). 
@@ -653,13 +670,21 @@ A processing instruction is something like :
 
 Keep DTD.
 
+=item B<ignore_dtd>
+
+When set, the minifier will ignore informations from the DTD (typically where blanks are meaningfull)
+
+This option can be used with B<keep_dtd>, you can decide to get informations from DTD then remove it (or the contrary).
+
+Then I must repeat that B<ignore_dtd> is NOT the contrary of B<keep_dtd>
+
 =item B<no_prolog>
 
 Do not put prolog (having no prolog is aggressive for XML readers).
 
 Prolog is at the start of the XML file and look like this :
 
-    <?xml version="1.0" encoding="UTF-8"?>";
+    <?xml version="1.0" encoding="UTF-8"?>
 
 =item B<version>
 

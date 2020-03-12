@@ -75,10 +75,10 @@ chomp $keeppi;
 chomp $keepdtd;
 chomp $keepcdata;
 
-is(minify($maxi, no_prolog => 1, keep_comments => 1), $keepcomments, "Keep comments");
-is(minify($maxi, no_prolog => 1, keep_pi => 1), $keeppi, "Keep pi");
-is(minify($maxi, no_prolog => 1, keep_dtd => 1), $keepdtd, "Keep dtd");
-is(minify($maxi, no_prolog => 1, keep_cdata => 1), $keepcdata, "Keep cdata");
+is(minify($maxi, no_prolog => 1, keep_comments => 1, ignore_dtd => 1), $keepcomments, "Keep comments");
+is(minify($maxi, no_prolog => 1, keep_pi => 1, ignore_dtd => 1), $keeppi, "Keep pi");
+is(minify($maxi, no_prolog => 1, keep_dtd => 1, ignore_dtd => 1), $keepdtd, "Keep dtd");
+is(minify($maxi, no_prolog => 1, keep_cdata => 1, ignore_dtd => 1), $keepcdata, "Keep cdata");
 
 done_testing;
 
