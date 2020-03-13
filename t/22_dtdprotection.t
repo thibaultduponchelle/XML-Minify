@@ -72,6 +72,30 @@ chomp $ignore;
 is(minify($maxi, no_prolog => 1), $mini, "DTD does not protect node (but DTD itself is removed)");
 is(minify($maxi, no_prolog => 1, ignore_dtd => 1), $ignore, "Ignore DTD");
 
+$maxi = << "END";
+<!DOCTYPE root [ <!ELEMENT protectednode (protectedleaf | unprotectedleaf)*> <!ELEMENT protectedleaf (#PCDATA)*> <!ELEMENT somethingelse (tag)*>
+
+]>
+<root>
+
+<protectednode>
+
+<protectedleaf>                       </protectedleaf>
+<unprotectedleaf>                       </unprotectedleaf>
+
+</protectednode>
+</root>
+END
+
+$mini = << "END";
+<root><protectednode><protectedleaf>                       </protectedleaf><unprotectedleaf/></protectednode></root>
+END
+
+chomp $maxi;
+chomp $mini;
+
+is(minify($maxi, no_prolog => 1), $mini, "DTD on one line");
+
 
 done_testing;
 
