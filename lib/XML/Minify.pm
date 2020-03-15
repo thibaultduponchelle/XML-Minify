@@ -130,7 +130,9 @@ sub minify($%) {
 				foreach my $dc ($flc->childNodes()) {
 					if($dc->nodeType == XML_ELEMENT_DECL) {
 						$we_have_infos_from_dtd = "We can remove empty text in leafs if not protected by DTD";
-						if($dc->toString() =~ /<!ELEMENT\s+(\w+)\s*\(.*#PCDATA.*\).*>/) {
+						# The .* could appear weak (and match towards other ELEMENTS), but we are working on ONLY ONE <!ELEMENT ... >
+						# (because we are in one child node)
+						if($dc->toString() =~ /<!ELEMENT\s*(\w+)\s*\(.*#PCDATA.*\).*>/) {
 							$do_not_remove_blanks{$1} = "Not ignorable due to DTD declaration !";
 						}
 					}
