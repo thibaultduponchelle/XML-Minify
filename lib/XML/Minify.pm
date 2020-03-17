@@ -460,7 +460,11 @@ But a typical use would include some parameters like this :
     use XML::Minify qw(minify);
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
-    my $mini = minify($maxi), no_prolog => 1, aggressive => 1);
+    my $mini = minify($maxi, no_prolog => 1, aggressive => 1);
+
+That will produce :
+
+    <person><name>tib</name><level>42</level></person>
 
 B<aggressive>, B<destructive> and B<insane> are shortcuts that define a set of parameters. 
 
@@ -469,7 +473,9 @@ You can set indivually with :
     use XML::Minify qw(minify);
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  </person>";
-    my $mini = minify($maxi), no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);
+    my $mini = minify($maxi, no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);
+
+The code above means "minify this string with aggressive mode BUT keep comments and in addition remove indent".
 
 Not every parameter has a B<keep_> neither a B<remove_>, please see below for detailed list.
 

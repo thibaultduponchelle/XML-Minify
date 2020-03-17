@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's a configurable XML minifier.",
+   "abstract" : "A configurable XML minifier.",
    "author" : [
       "Thibault DUPONCHELLE"
    ],
