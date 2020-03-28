@@ -4,10 +4,10 @@ use warnings;
 use Test::More 0.98;
 
 use_ok $_ for qw(
-    XML::Minify
+    XML::Minifier
 );
 
-use XML::Minify;
+use XML::Minifier;
 
 is(minify("<tag/>"), minify("<tag/>"), "Test import by default");
 

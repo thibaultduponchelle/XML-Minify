@@ -1,9 +1,9 @@
-package XML::Minify;
+package XML::Minifier;
 use 5.010000;
 use strict;
 use warnings;
 
-our $VERSION = "1.01";
+our $VERSION = "1.02";
 
 use XML::LibXML; # To be installed from CPAN : sudo cpanm XML::LibXML 
 # CPAN rules !
@@ -440,7 +440,7 @@ __END__
 
 =head1 NAME
 
-XML::Minify - A configurable XML minifier.
+XML::Minifier - A configurable XML minifier.
 
 =head1 WARNING
 
@@ -448,16 +448,16 @@ The API (option names) is almost stabilized (but not fully) and can therefore st
 
 =head1 SYNOPSIS
 
-Here is the simplest way to use XML::Minify :
+Here is the simplest way to use XML::Minifier :
 
-    use XML::Minify;
+    use XML::Minifier;
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
     my $mini = minify($maxi);
 
 But a typical use would include some parameters like this :
 
-    use XML::Minify qw(minify);
+    use XML::Minifier qw(minify);
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
     my $mini = minify($maxi, no_prolog => 1, aggressive => 1);
@@ -470,7 +470,7 @@ B<aggressive>, B<destructive> and B<insane> are shortcuts that define a set of p
 
 You can set indivually with :
 
-    use XML::Minify qw(minify);
+    use XML::Minifier qw(minify);
 
     my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
     my $mini = minify($maxi, no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);

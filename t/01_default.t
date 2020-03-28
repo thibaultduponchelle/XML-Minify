@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More 0.98;
 
-use XML::Minify qw(minify);
+use XML::Minifier qw(minify);
 
 my $maxi = "<empty></empty>";
 my $mini = "<empty/>";

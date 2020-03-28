@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/thibaultduponchelle/XML-Minify.svg?branch=master)](https://travis-ci.org/thibaultduponchelle/XML-Minify) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minify/workflows/linux/badge.svg)](https://github.com/thibaultduponchelle/XML-Minify/actions) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minify/workflows/macos/badge.svg)](https://github.com/thibaultduponchelle/XML-Minify/actions) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minify/workflows/windows/badge.svg)](https://github.com/thibaultduponchelle/XML-Minify/actions) [![Kritika Status](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+XML-Minify/heads/master/status.svg)](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+XML-Minify)
+[![Build Status](https://travis-ci.org/thibaultduponchelle/XML-Minifier.svg?branch=master)](https://travis-ci.org/thibaultduponchelle/XML-Minifier) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minifier/workflows/linux/badge.svg)](https://github.com/thibaultduponchelle/XML-Minifier/actions) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minifier/workflows/macos/badge.svg)](https://github.com/thibaultduponchelle/XML-Minifier/actions) [![Actions Status](https://github.com/thibaultduponchelle/XML-Minifier/workflows/windows/badge.svg)](https://github.com/thibaultduponchelle/XML-Minifier/actions) [![Kritika Status](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+XML-Minifier/heads/master/status.svg)](https://kritika.io/users/thibaultduponchelle/repos/thibaultduponchelle+XML-Minifier)
 # NAME
 
-XML::Minify - A configurable XML minifier.
+XML::Minifier - A configurable XML minifier.
 
 # WARNING
 
@@ -9,10 +9,10 @@ The API (option names) is almost stabilized (but not fully) and can therefore st
 
 # SYNOPSIS
 
-Here is the simplest way to use XML::Minify :
+Here is the simplest way to use XML::Minifier :
 
 ```perl
-use XML::Minify;
+use XML::Minifier;
 
 my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
 my $mini = minify($maxi);
@@ -21,7 +21,7 @@ my $mini = minify($maxi);
 But a typical use would include some parameters like this :
 
 ```perl
-use XML::Minify qw(minify);
+use XML::Minifier qw(minify);
 
 my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
 my $mini = minify($maxi, no_prolog => 1, aggressive => 1);
@@ -38,7 +38,7 @@ That will produce :
 You can set indivually with :
 
 ```perl
-use XML::Minify qw(minify);
+use XML::Minifier qw(minify);
 
 my $maxi = "<person>   <name>tib   </name>   <level>  42  </level>  <city>   </city>  </person>";
 my $mini = minify($maxi, no_prolog => 1, aggressive => 1, keep_comments => 1, remove_indent => 1);

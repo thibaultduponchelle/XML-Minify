@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More 0.98;
 
-use XML::Minify qw(minify);
+use XML::Minifier qw(minify);
 
 # Actually we test that the xinclude is feature implemeted by xmlprocessor (XML::LibXML) is preserved by our minifier
 

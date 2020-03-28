@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-use XML::Minify 'minify';
+use XML::Minifier 'minify';
 
 use strict;
 use warnings;

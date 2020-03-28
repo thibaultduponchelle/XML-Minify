@@ -10,9 +10,9 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
-   "name" : "XML-Minify",
+   "name" : "XML-Minifier",
    "no_index" : {
       "directory" : [
          "t",
@@ -48,27 +48,28 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "Test::More" : "0.98",
+            "Test::Slow" : "0.04"
          }
       }
    },
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/thibaultduponchelle/XML-Minify/issues"
+         "web" : "https://github.com/thibaultduponchelle/XML-Minifier/issues"
       },
-      "homepage" : "https://github.com/thibaultduponchelle/XML-Minify",
+      "homepage" : "https://github.com/thibaultduponchelle/XML-Minifier",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/thibaultduponchelle/XML-Minify.git",
-         "web" : "https://github.com/thibaultduponchelle/XML-Minify"
+         "url" : "git://github.com/thibaultduponchelle/XML-Minifier.git",
+         "web" : "https://github.com/thibaultduponchelle/XML-Minifier"
       }
    },
-   "version" : "1.01",
+   "version" : "1.02",
    "x_contributors" : [
       "Thibault DUPONCHELLE <thibault.duponchelle@gmail.com>",
       "thibaultduponchelle <580360+thibaultduponchelle@users.noreply.github.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27400_02",
+   "x_serialization_backend" : "JSON::PP version 4.04",
    "x_static_install" : 1
 }

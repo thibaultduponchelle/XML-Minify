@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More 0.98;
 
-use XML::Minify qw(minify);
+use XML::Minifier qw(minify);
 
 my $cdataincomment = << "END";
 <catalog xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xi="http://www.w3.org/2001/XInclude">

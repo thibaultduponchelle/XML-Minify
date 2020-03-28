@@ -3,7 +3,7 @@ use warnings;
 
 use Test::More 0.98;
 
-use XML::Minify "minify";
+use XML::Minifier "minify";
 
 # At the time I write this test, we scale badly 
 # But t is not our fault
