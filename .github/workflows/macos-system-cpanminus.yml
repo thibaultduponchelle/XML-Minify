@@ -1,4 +1,4 @@
-name: macos-system
+name: macos-system-cpanminus
 
 on:
   push:
