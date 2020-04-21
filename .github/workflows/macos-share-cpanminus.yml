@@ -1,4 +1,4 @@
-name: macos-share
+name: macos-share-cpanminus
 
 on:
   push:
