@@ -1,4 +1,4 @@
-name: macos-cpm
+name: macos-noenv-cpm
 
 on:
   push:
