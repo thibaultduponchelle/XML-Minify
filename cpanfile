@@ -1,5 +1,5 @@
 requires 'perl', '5.010000';
-requires 'Alien::Build', '==2.20';
+requires 'Alien::Build', '==2.21';
 requires 'Alien::Libxml2', '==0.15';
 requires 'XML::LibXML', '==2.0204';
 
