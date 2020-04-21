@@ -33,4 +33,4 @@ jobs:
         run: perl -V
         
       - name: Install Dependencies
-        run: cpanm --installdeps .
+        run: cpanm -n --installdeps .
