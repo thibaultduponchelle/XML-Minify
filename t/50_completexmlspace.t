@@ -46,7 +46,7 @@ my $parser = new XML::LibXML;
 $parser->complete_attributes(1);
 
 my $dom = $parser->load_xml(string => $dtdattr);
-#is($dom . "", $completed, "Complete attributes from DTD with setter one key");
+#is($dom . "", $completed, "Complete attributes from DTD with setter one key"); # Need a fix on XML::LibXML side
 
 $parser->expand_entities(1);
 my $dom = $parser->load_xml(string => $dtdattr);
@@ -56,7 +56,7 @@ $dom = XML::LibXML->load_xml(string => $dtdattr, complete_attributes => 1, expan
 is($dom . "", $completed, "Complete attributes from DTD two keys");
 
 $dom = XML::LibXML->load_xml(string => $dtdattr, complete_attributes => 1);
-#is($dom . "", $completed, "Complete attributes from DTD one key");
+#is($dom . "", $completed, "Complete attributes from DTD one key"); # Need a fix on XML::LibXML side
 
 $dom = XML::LibXML->load_xml(string => $dtdattr, expand_entities => 1, complete_attributes => 0);
 is($dom . "", $notcompleted, "Do not complete attributes");
