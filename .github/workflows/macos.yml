@@ -1,4 +1,4 @@
-name: macos-system
+name: macos-share
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
   PERL_LOCAL_LIB_ROOT: /Users/runner/perl5
   PERL_MB_OPT: --install_base /Users/runner/perl5
   PERL_MM_OPT: INSTALL_BASE=/Users/runner/perl5
-  ALIEN_INSTALL_TYPE: system
+  ALIEN_INSTALL_TYPE: share
 
 jobs:
   perl:
@@ -26,7 +26,6 @@ jobs:
       - name: Set up Perl
         run: |
           brew install perl
-          brew install libxml2
           curl https://cpanmin.us | perl - App::cpanminus -n
           echo "##[add-path]/Users/runner/perl5/bin"
       - name: perl -V
