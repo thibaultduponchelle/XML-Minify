@@ -26,7 +26,7 @@ jobs:
       - name: Set up Perl
         run: |
           brew install perl
-          curl https://cpanmin.us | perl - App::cpanminus -n
+          brew install libxml2
           echo "##[add-path]/Users/runner/perl5/bin"
 
       - name: perl -V
