@@ -1,4 +1,4 @@
-name: macos-noenv-cpm
+name: macos-noenv-cpanminus
 
 on:
   push:
