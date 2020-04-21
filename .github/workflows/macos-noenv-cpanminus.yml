@@ -23,3 +23,5 @@ jobs:
         run: perl -V
       - name: Install Dependencies
         run: cpanm --installdeps .
+      - name: Logs
+        run: /Users/runner/.cpanm/work/*/build.log
