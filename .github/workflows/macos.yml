@@ -1,4 +1,4 @@
-name: macos
+name: macos-system
 
 on:
   push:
@@ -7,11 +7,14 @@ on:
     tags-ignore:
       - '*'
   pull_request:
-    branches: 
 
 env:
+  PERL5LIB: /Users/runner/perl5/lib/perl5
+  PERL_LOCAL_LIB_ROOT: /Users/runner/perl5
+  PERL_MB_OPT: --install_base /Users/runner/perl5
+  PERL_MM_OPT: INSTALL_BASE=/Users/runner/perl5
   ALIEN_INSTALL_TYPE: system
-  
+
 jobs:
   perl:
 
@@ -19,10 +22,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Perl
-        run: brew install perl
-      - name: Set up libxml2
-        run: brew install libxml2
+        run: |
+          brew install perl
+          brew install libxml2
+          curl https://cpanmin.us | perl - App::cpanminus -n
+          echo "##[add-path]/Users/runner/perl5/bin"
       - name: perl -V
         run: perl -V
       - name: Install Dependencies
