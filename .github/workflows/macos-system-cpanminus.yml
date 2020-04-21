@@ -33,11 +33,6 @@ jobs:
       - name: perl -V
         run: perl -V
 
-      - name: Prepare for cache
-        run: |
-          perl -V > perlversion.txt
-          ls -l perlversion.txt
-
       - name: Install Dependencies
         run: cpanm --installdeps .
       - name: Logs
