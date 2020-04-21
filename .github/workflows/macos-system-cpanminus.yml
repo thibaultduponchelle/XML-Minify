@@ -26,11 +26,17 @@ jobs:
       - name: Set up Perl
         run: |
           brew install perl
+          brew install libxml2
           curl https://cpanmin.us | perl - App::cpanminus -n
           echo "##[add-path]/Users/runner/perl5/bin"
 
       - name: perl -V
         run: perl -V
-        
+
+      - name: Prepare for cache
+        run: |
+          perl -V > perlversion.txt
+          ls -l perlversion.txt
+
       - name: Install Dependencies
-        run: cpanm -n --installdeps .
+        run: cpanm --installdeps .
