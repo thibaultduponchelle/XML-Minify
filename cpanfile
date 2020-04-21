@@ -1,5 +1,5 @@
 requires 'perl', '5.010000';
-requires 'Alien::Build', '==2.21';
+requires 'Alien::Build', '==2.17';
 requires 'Alien::Libxml2', '==0.15';
 
 on 'test' => sub {
