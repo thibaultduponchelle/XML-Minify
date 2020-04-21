@@ -35,5 +35,4 @@ jobs:
 
       - name: Install Dependencies
         run: | 
-          cpanm --installdeps . 
-          cat /Users/runner/.cpanm/work/*/build.log
+          cpanm -v --installdeps . 
