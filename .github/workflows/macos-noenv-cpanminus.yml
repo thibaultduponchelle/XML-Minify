@@ -16,9 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Perl
-        run: | 
+        run: |
           brew install perl
           curl https://cpanmin.us | perl - App::cpanminus -n
+          echo "##[add-path]/Users/runner/perl5/bin"
       - name: perl -V
         run: perl -V
       - name: Install Dependencies
