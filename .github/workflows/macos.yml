@@ -7,7 +7,11 @@ on:
     tags-ignore:
       - '*'
   pull_request:
+    branches: 
 
+env:
+  ALIEN_INSTALL_TYPE: system
+  
 jobs:
   perl:
 
