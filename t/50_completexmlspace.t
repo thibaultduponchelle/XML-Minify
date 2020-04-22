@@ -49,7 +49,7 @@ my $dom = $parser->load_xml(string => $dtdattr);
 #is($dom . "", $completed, "Complete attributes from DTD with setter one key"); # Need a fix on XML::LibXML side
 
 $parser->expand_entities(1);
-my $dom = $parser->load_xml(string => $dtdattr);
+$dom = $parser->load_xml(string => $dtdattr);
 is($dom . "", $completed, "Complete attributes from DTD with setter two keys");
 
 $dom = XML::LibXML->load_xml(string => $dtdattr, complete_attributes => 1, expand_entities => 1);
